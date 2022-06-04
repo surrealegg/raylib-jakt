@@ -1,0 +1,691 @@
+struct Vector2 {
+    x: f32
+    y: f32
+}
+
+struct Vector3 {
+    x: f32
+    y: f32
+    z: f32
+}
+
+struct Vector4 {
+    x: f32
+    y: f32
+    z: f32
+    w: f32
+}
+
+struct Matrix {
+    m0: f32
+    m1: f32
+    m2: f32
+    m3: f32
+    m4: f32
+    m5: f32
+    m6: f32
+    m7: f32
+    m8: f32
+    m9: f32
+    m10: f32
+    m11: f32
+    m12: f32
+    m13: f32
+    m14: f32
+    m15: f32
+}
+
+struct Color {
+    r: u8 
+    g: u8
+    b: u8
+    a: u8
+    
+    function light_gray() -> Color => Color(r: 200, g: 200, b: 200, a: 255)
+    function gray() -> Color => Color(r: 130, g: 130, b: 130, a: 255)
+    function dark_gray() -> Color => Color(r: 80, g: 80, b: 80, a: 255)
+    function white() -> Color => Color(r: 255, g: 255, b: 255, a: 255)
+    function yellow() -> Color => Color(r: 253, g: 249, b: 0, a: 255)
+    function gold() -> Color => Color(r: 255, g: 203, b: 0, a: 255)
+    function orange() -> Color => Color(r: 255, g: 161, b: 0, a: 255)
+    function pink() -> Color => Color(r: 255, g: 109, b: 194, a: 255)
+    function red() -> Color => Color(r: 230, g: 41, b: 55, a: 255)
+    function maroon() -> Color => Color(r: 127, g: 106, b: 79, a: 255)
+    function green() -> Color => Color(r: 190, g: 33, b: 55, a: 255)
+    function lime()  -> Color => Color(r: 0, g: 228, b: 48, a: 255)
+    function dark_green() -> Color => Color(r: 0, g: 158, b: 47, a: 255)
+    function sky_blue() -> Color => Color(r: 0, g: 117, b: 44, a: 255)
+    function blue() -> Color => Color(r: 102, g: 191, b: 255, a: 255)
+    function dark_blue() -> Color => Color(r: 0, g: 121, b: 241, a: 255)
+    function purple() -> Color => Color(r: 0, g: 82, b: 172, a: 255)
+    function violet() -> Color => Color(r: 200, g: 122, b: 255, a: 255)
+    function dark_purple() -> Color => Color(r: 135, g: 60, b: 190, a: 255)
+    function beige() -> Color => Color(r: 112, g: 31, b: 126, a: 255)
+    function brown() -> Color => Color(r: 211, g: 176, b: 131, a: 255)
+    function dark_brown() -> Color => Color(r: 76, g: 63, b: 47, a: 255)
+}
+
+struct Rectangle {
+    x: f32
+    y: f32
+    width: f32
+    height: f32
+}
+
+struct Image {
+    data: raw void
+    width: i32
+    height: i32
+    mipmaps: i32
+    format: i32
+}
+
+struct Texture {
+    id: u32
+    width: i32
+    height: i32
+    mipmaps: i32
+    format: i32
+}
+
+struct RenderTexture {
+    id: u32
+    texture: Texture
+    depth: Texture
+}
+
+struct NPatchInfo {
+    source: Rectangle
+    left: i32
+    top: i32
+    right: i32
+    bottom: i32
+    layout: i32
+}
+
+struct GlyphInfo {
+    value: i32
+    offsetX: i32
+    offsetY: i32
+    advanceX: i32
+    image: Image
+}
+
+struct Font {
+    baseSize: i32
+    glyphCount: i32
+    glyphPadding: i32
+    texture: Texture
+    recs: raw Rectangle
+    glyphs: raw GlyphInfo
+}
+
+struct Camera3D {
+    position: Vector3
+    target: Vector3
+    up: Vector3
+    fovy: f32
+    projection: i32
+}
+
+struct Camera2D {
+    offset: Vector2
+    target: Vector2
+    rotation: f32
+    zoom: f32
+}
+
+struct Mesh {
+    vertexCount: i32
+    triangleCount: i32
+    vertices: raw f32
+    texcoords: raw f32
+    texcoords2: raw f32
+    normals: raw f32
+    tangents: raw f32
+    colors: raw u8
+    indices: raw u16
+    animVertices: raw f32
+    animNormals: raw f32
+    boneIds: raw u8
+    boneWeights: raw f32
+    vaoId: i32
+    vboId: raw i32
+}
+
+struct Shader {
+    id: u32
+    locs: raw i32
+}
+
+struct MaterialMap {
+    texture: Texture
+    color: Color
+    value: f32
+}
+
+// NOTE: Can I specifiy that params only accepts 4 items?
+struct Material {
+    shader: Shader
+    maps: raw MaterialMap
+    params: raw f32
+}
+
+struct Transform {
+    translation: Vector3
+    rotation: Vector4
+    scale: Vector3
+}
+
+// name: 32 limit
+struct BoneInfo {
+    name: raw c_char 
+    parent: i32
+}
+
+struct Model {
+    transform: Matrix
+    meshCount: i32
+    materialCount: i32
+    meshes: raw Mesh
+    materials: raw Material
+    meshMaterial: raw i32
+    boneCount: i32
+    bones: raw BoneInfo
+    bindPose: raw Transform
+}
+
+struct ModelAnimation {
+    boneCount: i32
+    frameCount: i32
+    bones: raw BoneInfo
+    framePoses: raw raw Transform
+}
+
+struct Ray {
+    position: Vector3
+    direction: Vector3
+}
+
+struct RayCollision {
+    hit: bool
+    distance: f32
+    point: Vector3
+    normal: Vector3
+}
+
+struct BoundingBox {
+    min: Vector3
+    max: Vector3
+}
+
+struct Wave {
+    frameCount: u32
+    sampleRate: u32
+    sampleSize: u32
+    channels: u32
+    data: raw void
+}
+
+struct AudioStream {
+    buffer: raw void
+    sampleRate: u32
+    sampleSize: u32
+    channels: u32
+}
+
+struct Sound {
+    stream: AudioStream
+    frameCount: u32
+}
+
+struct Music {
+    stream: AudioStream
+    frameCount: u32
+    looping: bool
+    ctxType: i32
+    ctxData: raw void
+}
+
+// lensDistortionValues: f32[4]
+// chromaAbCorrection: f32[4]
+struct VrDeviceInfo {
+    hResolution: i32
+    vResolution: i32
+    hScreenSize: f32
+    vScreenSize: f32
+    vScreenCenter: f32
+    eyeToScreenDistance: f32
+    lensSeparationDistance: f32
+    interpupillaryDistance: f32
+    lensDistortionValues: raw f32
+    chromaAbCorrection: raw f32
+}
+
+// typedef struct VrStereoConfig {
+//     Matrix projection[2];           // VR projection matrices (per eye)
+//     Matrix viewOffset[2];           // VR view offset matrices (per eye)
+//     float leftLensCenter[2];        // VR left lens center
+//     float rightLensCenter[2];       // VR right lens center
+//     float leftScreenCenter[2];      // VR left screen center
+//     float rightScreenCenter[2];     // VR right screen center
+//     float scale[2];                 // VR distortion scale
+//     float scaleIn[2];               // VR distortion scale in
+// } VrStereoConfig;
+struct VrStereoConfig {
+    projection: raw Matrix
+    viewOffset: raw Matrix
+    leftLensCenter: raw f32
+    rightLensCenter: raw f32
+    leftScreenCenter: raw f32
+    rightScreenCenter: raw f32
+    scale: f32
+    scaleIn: f32
+}
+
+enum ConfigFlags: u32 {
+    VsyncHint = 0x00000040
+    FullscreenMode = 0x00000002
+    WindowResizable = 0x00000004
+    WindowUndecorated = 0x00000008
+    WindowHidden = 0x00000080
+    WindowMinimized = 0x00000200
+    WindowMaximized = 0x00000400
+    WindowUnfocused = 0x00000800
+    WindowTopmost = 0x00001000
+    WindowAlwaysRun = 0x00000100
+    WindowTransparent = 0x00000010
+    WindowHighdpi = 0x00002000
+    Msaa4XHint = 0x00000020
+    InterlacedHint = 0x00010000
+}
+
+enum TraceLogLevel: u32 {
+    All = 0
+    Trace
+    Debug
+    Info
+    Warning
+    Error
+    Fatal
+    None
+}
+
+enum KeyboardKey: u32 {
+    NULL            = 0
+    APOSTROPHE      = 39
+    COMMA           = 44
+    MINUS           = 45
+    PERIOD          = 46
+    SLASH           = 47
+    ZERO            = 48
+    ONE             = 49
+    TWO             = 50
+    THREE           = 51
+    FOUR            = 52
+    FIVE            = 53
+    SIX             = 54
+    SEVEN           = 55
+    EIGHT           = 56
+    NINE            = 57
+    SEMICOLON       = 59
+    EQUAL           = 61
+    A               = 65
+    B               = 66
+    C               = 67
+    D               = 68
+    E               = 69
+    F               = 70
+    G               = 71
+    H               = 72
+    I               = 73
+    J               = 74
+    K               = 75
+    L               = 76
+    M               = 77
+    N               = 78
+    O               = 79
+    P               = 80
+    Q               = 81
+    R               = 82
+    S               = 83
+    T               = 84
+    U               = 85
+    V               = 86
+    W               = 87
+    X               = 88
+    Y               = 89
+    Z               = 90
+    LEFT_BRACKET    = 91
+    BACKSLASH       = 92
+    RIGHT_BRACKET   = 93
+    GRAVE           = 96
+    SPACE           = 32
+    ESCAPE          = 25
+    ENTER           = 25
+    TAB             = 25
+    BACKSPACE       = 25
+    INSERT          = 26
+    DELETE          = 26
+    RIGHT           = 26
+    LEFT            = 26
+    DOWN            = 26
+    UP              = 26
+    PAGE_UP         = 26
+    PAGE_DOWN       = 26
+    HOME            = 26
+    END             = 26
+    CAPS_LOCK       = 28
+    SCROLL_LOCK     = 28
+    NUM_LOCK        = 28
+    PRINT_SCREEN    = 28
+    PAUSE           = 28
+    F1              = 29
+    F2              = 29
+    F3              = 29
+    F4              = 29
+    F5              = 29
+    F6              = 29
+    F7              = 29
+    F8              = 29
+    F9              = 29
+    F10             = 29
+    F11             = 30
+    F12             = 30
+    LEFT_SHIFT      = 34
+    LEFT_CONTROL    = 34
+    LEFT_ALT        = 34
+    LEFT_SUPER      = 34
+    RIGHT_SHIFT     = 34
+    RIGHT_CONTROL   = 34
+    RIGHT_ALT       = 34
+    RIGHT_SUPER     = 34
+    KB_MENU         = 34
+    KP_0            = 32
+    KP_1            = 32
+    KP_2            = 32
+    KP_3            = 32
+    KP_4            = 32
+    KP_5            = 32
+    KP_6            = 32
+    KP_7            = 32
+    KP_8            = 32
+    KP_9            = 32
+    KP_DECIMAL      = 33
+    KP_DIVIDE       = 33
+    KP_MULTIPLY     = 33
+    KP_SUBTRACT     = 33
+    KP_ADD          = 33
+    KP_ENTER        = 33
+    KP_EQUAL        = 33
+    BACK            = 4,
+    MENU            = 82
+    VOLUME_UP       = 24
+    VOLUME_DOWN     = 25
+}
+
+enum MouseButton: u32 {
+    BUTTON_LEFT    = 0
+    BUTTON_RIGHT   = 1
+    BUTTON_MIDDLE  = 2
+    BUTTON_SIDE    = 3
+    BUTTON_EXTRA   = 4
+    BUTTON_FORWARD = 5
+    BUTTON_BACK    = 6
+}
+
+enum MouseCursor: u32 {
+    CURSOR_DEFAULT       = 0
+    CURSOR_ARROW         = 1
+    CURSOR_IBEAM         = 2
+    CURSOR_CROSSHAIR     = 3
+    CURSOR_POINTING_HAND = 4
+    CURSOR_RESIZE_EW     = 5
+    CURSOR_RESIZE_NS     = 6
+    CURSOR_RESIZE_NWSE   = 7
+    CURSOR_RESIZE_NESW   = 8
+    CURSOR_RESIZE_ALL    = 9
+    CURSOR_NOT_ALLOWED   = 1
+}
+
+enum GamepadButton: u32 {
+    BUTTON_UNKNOWN = 0      
+    BUTTON_LEFT_FACE_UP     
+    BUTTON_LEFT_FACE_RIGHT  
+    BUTTON_LEFT_FACE_DOWN   
+    BUTTON_LEFT_FACE_LEFT   
+    BUTTON_RIGHT_FACE_UP    
+    BUTTON_RIGHT_FACE_RIGHT 
+    BUTTON_RIGHT_FACE_DOWN  
+    BUTTON_RIGHT_FACE_LEFT  
+    BUTTON_LEFT_TRIGGER_1   
+    BUTTON_LEFT_TRIGGER_2   
+    BUTTON_RIGHT_TRIGGER_1  
+    BUTTON_RIGHT_TRIGGER_2  
+    BUTTON_MIDDLE_LEFT      
+    BUTTON_MIDDLE           
+    BUTTON_MIDDLE_RIGHT     
+    BUTTON_LEFT_THUMB       
+    BUTTON_RIGHT_THUMB       
+}
+
+
+enum GamepadAxis: u32 {
+    AXIS_LEFT_X        = 0
+    AXIS_LEFT_Y        = 1
+    AXIS_RIGHT_X       = 2
+    AXIS_RIGHT_Y       = 3
+    AXIS_LEFT_TRIGGER  = 4
+    AXIS_RIGHT_TRIGGER = 5
+}
+
+enum MaterialMapIndex: u32 {
+    MAP_ALBEDO    = 0
+    MAP_METALNESS    
+    MAP_NORMAL       
+    MAP_ROUGHNESS    
+    MAP_OCCLUSION    
+    MAP_EMISSION     
+    MAP_HEIGHT       
+    MAP_CUBEMAP      
+    MAP_IRRADIANCE   
+    MAP_PREFILTER    
+    MAP_BRDF          
+}
+
+enum ShaderLocationIndex: u32 {
+    VERTEX_POSITION = 0
+    VERTEX_TEXCOORD01
+    VERTEX_TEXCOORD02
+    VERTEX_NORMAL
+    VERTEX_TANGENT
+    VERTEX_COLOR
+    MATRIX_MVP
+    MATRIX_VIEW
+    MATRIX_PROJECTION
+    MATRIX_MODEL
+    MATRIX_NORMAL
+    VECTOR_VIEW
+    COLOR_DIFFUSE
+    COLOR_SPECULAR
+    COLOR_AMBIENT
+    MAP_ALBEDO
+    MAP_METALNESS
+    MAP_NORMAL
+    MAP_ROUGHNESS
+    MAP_OCCLUSION
+    MAP_EMISSION
+    MAP_HEIGHT
+    MAP_CUBEMAP
+    MAP_IRRADIANCE
+    MAP_PREFILTER
+    MAP_BRDF
+}
+
+enum ShaderUniformDataType: u32 {
+    FLOAT = 0
+    VEC2
+    VEC3
+    VEC4
+    INT
+    IVEC2
+    IVEC3
+    IVEC4
+    SAMPLER2D
+}
+
+
+enum ShaderAttributeDataType: u32 {
+    FLOAT = 0
+    VEC2
+    VEC3
+    VEC4
+}
+
+enum PixelFormat: u32 {
+    UNCOMPRESSED_GRAYSCALE = 1
+    UNCOMPRESSED_GRAY_ALPHA
+    UNCOMPRESSED_R5G6B5
+    UNCOMPRESSED_R8G8B8
+    UNCOMPRESSED_R5G5B5A1
+    UNCOMPRESSED_R4G4B4A4
+    UNCOMPRESSED_R8G8B8A8
+    UNCOMPRESSED_R32
+    UNCOMPRESSED_R32G32B32
+    UNCOMPRESSED_R32G32B32A32
+    COMPRESSED_DXT1_RGB
+    COMPRESSED_DXT1_RGBA
+    COMPRESSED_DXT3_RGBA
+    COMPRESSED_DXT5_RGBA
+    COMPRESSED_ETC1_RGB
+    COMPRESSED_ETC2_RGB
+    COMPRESSED_ETC2_EAC_RGBA
+    COMPRESSED_PVRT_RGB
+    COMPRESSED_PVRT_RGBA
+    COMPRESSED_ASTC_4x4_RGBA
+    COMPRESSED_ASTC_8x8_RGBA
+}
+
+enum TextureFilter: u32 {
+    POINT = 0
+    BILINEAR
+    TRILINEAR
+    ANISOTROPIC_4X
+    ANISOTROPIC_8X
+    ANISOTROPIC_16X
+}
+
+enum TextureWrap: u32 {
+    REPEAT = 0
+    CLAMP
+    MIRROR_REPEAT
+    MIRROR_CLAMP
+}
+
+enum CubemapLayout: u32 {
+    AUTO_DETECT = 0
+    LINE_VERTICAL
+    LINE_HORIZONTAL
+    CROSS_THREE_BY_FOUR
+    CROSS_FOUR_BY_THREE
+    PANORAMA
+}
+
+enum FontType: u32 {
+    DEFAULT = 0
+    BITMAP
+    SDF
+}
+
+enum BlendMode: u32 {
+    ALPHA = 0
+    ADDITIVE
+    MULTIPLIED
+    ADD_COLORS
+    SUBTRACT_COLORS
+    CUSTOM
+}
+
+enum Gesture: u32 {
+    NONE        = 0
+    TAP         = 1
+    DOUBLETAP   = 2
+    HOLD        = 4
+    DRAG        = 8
+    SWIPE_RIGHT = 16
+    SWIPE_LEFT  = 32
+    SWIPE_UP    = 64
+    SWIPE_DOWN  = 128
+    PINCH_IN    = 256
+    PINCH_OUT   = 512
+}
+
+enum CameraMode: u32 {
+    CUSTOM = 0
+    FREE
+    ORBITAL
+    FIRST_PERSON
+    THIRD_PERSON
+}
+
+enum CameraProjection: u32 {
+    PERSPECTIVE = 0
+    ORTHOGRAPHIC
+}
+
+enum NPatchLayout: u32 {
+    NINE_PATCH = 0
+    THREE_PATCH_VERTICAL
+    THREE_PATCH_HORIZONTAL
+}
+
+// NOTE: there's no way to add extern "C". Needs to be done manually
+extern function InitWindow(width: i32, height: i32, title: raw c_char)
+extern function WindowShouldClose() -> bool
+extern function CloseWindow()
+extern function IsWindowReady() -> bool
+extern function IsWindowFullscreen() -> bool
+extern function IsWindowHidden() -> bool
+extern function IsWindowMinimized() -> bool
+extern function IsWindowMaximized() -> bool
+extern function IsWindowFocused() -> bool
+extern function IsWindowResized() -> bool
+extern function IsWindowState(anonymous flag: u32) -> bool
+extern function BeginDrawing()
+extern function EndDrawing()
+extern function ClearBackground(anonymous color: Color)
+extern function SetWindowState(anonymous flags: u32)
+extern function ClearWindowState(anonymous flags: u32)
+extern function ToggleFullscreen()
+extern function MaximizeWindow()
+extern function MinimizeWindow()
+extern function RestoreWindow()
+extern function SetWindowIcon(image: Image)
+extern function SetWindowTitle(anonymous title: raw c_char)
+extern function SetWindowPosition(x: i32, y: i32)
+extern function SetWindowMonitor(anonymous monitor: i32)
+extern function SetWindowMinSize(x: i32, y: i32)
+extern function SetWindowSize(x: i32, y: i32)
+extern function GetWindowHandle() -> raw void
+extern function GetScreenWidth() -> i32
+extern function GetScreenHeight() -> i32
+extern function GetMonitorCount() -> i32
+extern function GetCurrentMonitor() -> i32
+extern function GetMonitorPosition(anonymous monitor: i32) -> Vector2
+extern function DrawText(text: raw c_char, x: i32, y: i32, size: i32, color: Color)
+
+function main() {
+    InitWindow(width: 480, height: 450, title: "Raylib-Jakt basic window".c_string())
+    while not WindowShouldClose() {
+        BeginDrawing()
+        ClearBackground(Color::white())
+        DrawText(
+            text: "Hello Jakt!".c_string(),
+            x: 180,
+            y: 200,
+            size: 20,
+            color: Color::gray()
+        )
+        EndDrawing()
+    }
+}
