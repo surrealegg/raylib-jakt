@@ -1,0 +1,1223 @@
+struct Vector2 {
+    x: f32
+    y: f32
+}
+
+struct Vector3 {
+    x: f32
+    y: f32
+    z: f32
+}
+
+struct Vector4 {
+    x: f32
+    y: f32
+    z: f32
+    w: f32
+}
+
+struct Matrix {
+    m0: f32
+    m1: f32
+    m2: f32
+    m3: f32
+    m4: f32
+    m5: f32
+    m6: f32
+    m7: f32
+    m8: f32
+    m9: f32
+    m10: f32
+    m11: f32
+    m12: f32
+    m13: f32
+    m14: f32
+    m15: f32
+}
+
+struct Color {
+    r: u8 
+    g: u8
+    b: u8
+    a: u8
+    
+    function light_gray() -> Color => Color(r: 200, g: 200, b: 200, a: 255)
+    function gray() -> Color => Color(r: 130, g: 130, b: 130, a: 255)
+    function dark_gray() -> Color => Color(r: 80, g: 80, b: 80, a: 255)
+    function white() -> Color => Color(r: 255, g: 255, b: 255, a: 255)
+    function yellow() -> Color => Color(r: 253, g: 249, b: 0, a: 255)
+    function gold() -> Color => Color(r: 255, g: 203, b: 0, a: 255)
+    function orange() -> Color => Color(r: 255, g: 161, b: 0, a: 255)
+    function pink() -> Color => Color(r: 255, g: 109, b: 194, a: 255)
+    function red() -> Color => Color(r: 230, g: 41, b: 55, a: 255)
+    function maroon() -> Color => Color(r: 127, g: 106, b: 79, a: 255)
+    function green() -> Color => Color(r: 190, g: 33, b: 55, a: 255)
+    function lime()  -> Color => Color(r: 0, g: 228, b: 48, a: 255)
+    function dark_green() -> Color => Color(r: 0, g: 158, b: 47, a: 255)
+    function sky_blue() -> Color => Color(r: 0, g: 117, b: 44, a: 255)
+    function blue() -> Color => Color(r: 102, g: 191, b: 255, a: 255)
+    function dark_blue() -> Color => Color(r: 0, g: 121, b: 241, a: 255)
+    function purple() -> Color => Color(r: 0, g: 82, b: 172, a: 255)
+    function violet() -> Color => Color(r: 200, g: 122, b: 255, a: 255)
+    function dark_purple() -> Color => Color(r: 135, g: 60, b: 190, a: 255)
+    function beige() -> Color => Color(r: 112, g: 31, b: 126, a: 255)
+    function brown() -> Color => Color(r: 211, g: 176, b: 131, a: 255)
+    function dark_brown() -> Color => Color(r: 76, g: 63, b: 47, a: 255)
+}
+
+struct Rectangle {
+    x: f32
+    y: f32
+    width: f32
+    height: f32
+}
+
+struct Image {
+    data: raw void
+    width: i32
+    height: i32
+    mipmaps: i32
+    format: i32
+}
+
+struct Texture {
+    id: u32
+    width: i32
+    height: i32
+    mipmaps: i32
+    format: i32
+}
+
+struct RenderTexture {
+    id: u32
+    texture: Texture
+    depth: Texture
+}
+
+struct NPatchInfo {
+    source: Rectangle
+    left: i32
+    top: i32
+    right: i32
+    bottom: i32
+    layout: i32
+}
+
+struct GlyphInfo {
+    value: i32
+    offsetX: i32
+    offsetY: i32
+    advanceX: i32
+    image: Image
+}
+
+struct Font {
+    baseSize: i32
+    glyphCount: i32
+    glyphPadding: i32
+    texture: Texture
+    recs: raw Rectangle
+    glyphs: raw GlyphInfo
+}
+
+struct Camera3D {
+    position: Vector3
+    target: Vector3
+    up: Vector3
+    fovy: f32
+    projection: i32
+}
+
+struct Camera2D {
+    offset: Vector2
+    target: Vector2
+    rotation: f32
+    zoom: f32
+}
+
+struct Mesh {
+    vertexCount: i32
+    triangleCount: i32
+    vertices: raw f32
+    texcoords: raw f32
+    texcoords2: raw f32
+    normals: raw f32
+    tangents: raw f32
+    colors: raw u8
+    indices: raw u16
+    animVertices: raw f32
+    animNormals: raw f32
+    boneIds: raw u8
+    boneWeights: raw f32
+    vaoId: i32
+    vboId: raw i32
+}
+
+struct Shader {
+    id: u32
+    locs: raw i32
+}
+
+struct MaterialMap {
+    texture: Texture
+    color: Color
+    value: f32
+}
+
+// NOTE: Can I specifiy that params only accepts 4 items?
+struct Material {
+    shader: Shader
+    maps: raw MaterialMap
+    params: raw f32
+}
+
+struct Transform {
+    translation: Vector3
+    rotation: Vector4
+    scale: Vector3
+}
+
+// name: 32 limit
+struct BoneInfo {
+    name: raw c_char 
+    parent: i32
+}
+
+struct Model {
+    transform: Matrix
+    meshCount: i32
+    materialCount: i32
+    meshes: raw Mesh
+    materials: raw Material
+    meshMaterial: raw i32
+    boneCount: i32
+    bones: raw BoneInfo
+    bindPose: raw Transform
+}
+
+struct ModelAnimation {
+    boneCount: i32
+    frameCount: i32
+    bones: raw BoneInfo
+    framePoses: raw raw Transform
+}
+
+struct Ray {
+    position: Vector3
+    direction: Vector3
+}
+
+struct RayCollision {
+    hit: bool
+    distance: f32
+    point: Vector3
+    normal: Vector3
+}
+
+struct BoundingBox {
+    min: Vector3
+    max: Vector3
+}
+
+struct Wave {
+    frameCount: u32
+    sampleRate: u32
+    sampleSize: u32
+    channels: u32
+    data: raw void
+}
+
+struct AudioStream {
+    buffer: raw void
+    sampleRate: u32
+    sampleSize: u32
+    channels: u32
+}
+
+struct Sound {
+    stream: AudioStream
+    frameCount: u32
+}
+
+struct Music {
+    stream: AudioStream
+    frameCount: u32
+    looping: bool
+    ctxType: i32
+    ctxData: raw void
+}
+
+// lensDistortionValues: f32[4]
+// chromaAbCorrection: f32[4]
+struct VrDeviceInfo {
+    hResolution: i32
+    vResolution: i32
+    hScreenSize: f32
+    vScreenSize: f32
+    vScreenCenter: f32
+    eyeToScreenDistance: f32
+    lensSeparationDistance: f32
+    interpupillaryDistance: f32
+    lensDistortionValues: raw f32
+    chromaAbCorrection: raw f32
+}
+
+// typedef struct VrStereoConfig {
+//     Matrix projection[2];           // VR projection matrices (per eye)
+//     Matrix viewOffset[2];           // VR view offset matrices (per eye)
+//     float leftLensCenter[2];        // VR left lens center
+//     float rightLensCenter[2];       // VR right lens center
+//     float leftScreenCenter[2];      // VR left screen center
+//     float rightScreenCenter[2];     // VR right screen center
+//     float scale[2];                 // VR distortion scale
+//     float scaleIn[2];               // VR distortion scale in
+// } VrStereoConfig;
+struct VrStereoConfig {
+    projection: raw Matrix
+    viewOffset: raw Matrix
+    leftLensCenter: raw f32
+    rightLensCenter: raw f32
+    leftScreenCenter: raw f32
+    rightScreenCenter: raw f32
+    scale: f32
+    scaleIn: f32
+}
+
+enum ConfigFlags: u32 {
+    VsyncHint = 0x00000040
+    FullscreenMode = 0x00000002
+    WindowResizable = 0x00000004
+    WindowUndecorated = 0x00000008
+    WindowHidden = 0x00000080
+    WindowMinimized = 0x00000200
+    WindowMaximized = 0x00000400
+    WindowUnfocused = 0x00000800
+    WindowTopmost = 0x00001000
+    WindowAlwaysRun = 0x00000100
+    WindowTransparent = 0x00000010
+    WindowHighdpi = 0x00002000
+    Msaa4XHint = 0x00000020
+    InterlacedHint = 0x00010000
+}
+
+enum TraceLogLevel: u32 {
+    All = 0
+    Trace
+    Debug
+    Info
+    Warning
+    Error
+    Fatal
+    None
+}
+
+enum KeyboardKey: u32 {
+    Null = 0
+    APOSTROPHE = 39
+    COMMA = 44
+    MINUS = 45
+    PERIOD = 46
+    SLASH = 47
+    ZERO = 48
+    ONE = 49
+    TWO = 50
+    THREE = 51
+    FOUR = 52
+    FIVE = 53
+    SIX = 54
+    SEVEN = 55
+    EIGHT = 56
+    NINE = 57
+    SEMICOLON = 59
+    EQUAL = 61
+    A = 65
+    B = 66
+    C = 67
+    D = 68
+    E = 69
+    F = 70
+    G = 71
+    H = 72
+    I = 73
+    J = 74
+    K = 75
+    L = 76
+    M = 77
+    N = 78
+    O = 79
+    P = 80
+    Q = 81
+    R = 82
+    S = 83
+    T = 84
+    U = 85
+    V = 86
+    W = 87
+    X = 88
+    Y = 89
+    Z = 90
+    LEFT_BRACKET = 91
+    BACKSLASH = 92
+    RIGHT_BRACKET = 93
+    GRAVE = 96
+    SPACE = 32
+    ESCAPE = 25
+    ENTER = 25
+    TAB = 25
+    BACKSPACE = 25
+    INSERT = 26
+    DELETE = 26
+    RIGHT = 26
+    LEFT = 26
+    DOWN = 26
+    UP = 26
+    PAGE_UP = 26
+    PAGE_DOWN = 26
+    HOME = 26
+    END = 26
+    CAPS_LOCK = 28
+    SCROLL_LOCK = 28
+    NUM_LOCK = 28
+    PRINT_SCREEN = 28
+    PAUSE = 28
+    F1 = 29
+    F2 = 29
+    F3 = 29
+    F4 = 29
+    F5 = 29
+    F6 = 29
+    F7 = 29
+    F8 = 29
+    F9 = 29
+    F10 = 29
+    F11 = 30
+    F12 = 30
+    LEFT_SHIFT = 34
+    LEFT_CONTROL = 34
+    LEFT_ALT = 34
+    LEFT_SUPER = 34
+    RIGHT_SHIFT = 34
+    RIGHT_CONTROL = 34
+    RIGHT_ALT = 34
+    RIGHT_SUPER = 34
+    KB_MENU = 34
+    KP_0 = 32
+    KP_1 = 32
+    KP_2 = 32
+    KP_3 = 32
+    KP_4 = 32
+    KP_5 = 32
+    KP_6 = 32
+    KP_7 = 32
+    KP_8 = 32
+    KP_9 = 32
+    KP_DECIMAL = 33
+    KP_DIVIDE = 33
+    KP_MULTIPLY = 33
+    KP_SUBTRACT = 33
+    KP_ADD = 33
+    KP_ENTER = 33
+    KP_EQUAL = 33
+    BACK = 4,
+    MENU = 82
+    VOLUME_UP = 24
+    VOLUME_DOWN = 25
+}
+
+enum MouseButton: u32 {
+    BUTTON_LEFT = 0
+    BUTTON_RIGHT = 1
+    BUTTON_MIDDLE = 2
+    BUTTON_SIDE = 3
+    BUTTON_EXTRA = 4
+    BUTTON_FORWARD = 5
+    BUTTON_BACK = 6
+}
+
+enum MouseCursor: u32 {
+    CURSOR_DEFAULT = 0
+    CURSOR_ARROW = 1
+    CURSOR_IBEAM = 2
+    CURSOR_CROSSHAIR = 3
+    CURSOR_POINTING_HAND = 4
+    CURSOR_RESIZE_EW = 5
+    CURSOR_RESIZE_NS = 6
+    CURSOR_RESIZE_NWSE = 7
+    CURSOR_RESIZE_NESW = 8
+    CURSOR_RESIZE_ALL = 9
+    CURSOR_NOT_ALLOWED = 1
+}
+
+enum GamepadButton: u32 {
+    BUTTON_UNKNOWN = 0      
+    BUTTON_LEFT_FACE_UP     
+    BUTTON_LEFT_FACE_RIGHT  
+    BUTTON_LEFT_FACE_DOWN   
+    BUTTON_LEFT_FACE_LEFT   
+    BUTTON_RIGHT_FACE_UP    
+    BUTTON_RIGHT_FACE_RIGHT 
+    BUTTON_RIGHT_FACE_DOWN  
+    BUTTON_RIGHT_FACE_LEFT  
+    BUTTON_LEFT_TRIGGER_1   
+    BUTTON_LEFT_TRIGGER_2   
+    BUTTON_RIGHT_TRIGGER_1  
+    BUTTON_RIGHT_TRIGGER_2  
+    BUTTON_MIDDLE_LEFT      
+    BUTTON_MIDDLE           
+    BUTTON_MIDDLE_RIGHT     
+    BUTTON_LEFT_THUMB       
+    BUTTON_RIGHT_THUMB       
+}
+
+
+enum GamepadAxis: u32 {
+    AXIS_LEFT_X        = 0
+    AXIS_LEFT_Y        = 1
+    AXIS_RIGHT_X       = 2
+    AXIS_RIGHT_Y       = 3
+    AXIS_LEFT_TRIGGER  = 4
+    AXIS_RIGHT_TRIGGER = 5
+}
+
+enum MaterialMapIndex: u32 {
+    ALBEDO    = 0
+    METALNESS    
+    NORMAL       
+    ROUGHNESS    
+    OCCLUSION    
+    EMISSION     
+    HEIGHT       
+    CUBEMAP      
+    IRRADIANCE   
+    PREFILTER    
+    BRDF          
+}
+
+enum ShaderLocationIndex: u32 {
+    VERTEX_POSITION = 0
+    VERTEX_TEXCOORD01
+    VERTEX_TEXCOORD02
+    VERTEX_NORMAL
+    VERTEX_TANGENT
+    VERTEX_COLOR
+    MATRIX_MVP
+    MATRIX_VIEW
+    MATRIX_PROJECTION
+    MATRIX_MODEL
+    MATRIX_NORMAL
+    VECTOR_VIEW
+    COLOR_DIFFUSE
+    COLOR_SPECULAR
+    COLOR_AMBIENT
+    MAP_ALBEDO
+    MAP_METALNESS
+    MAP_NORMAL
+    MAP_ROUGHNESS
+    MAP_OCCLUSION
+    MAP_EMISSION
+    MAP_HEIGHT
+    MAP_CUBEMAP
+    MAP_IRRADIANCE
+    MAP_PREFILTER
+    MAP_BRDF
+}
+
+enum ShaderUniformDataType: u32 {
+    FLOAT = 0
+    VEC2
+    VEC3
+    VEC4
+    INT
+    IVEC2
+    IVEC3
+    IVEC4
+    SAMPLER2D
+}
+
+
+enum ShaderAttributeDataType: u32 {
+    FLOAT = 0
+    VEC2
+    VEC3
+    VEC4
+}
+
+enum PixelFormat: u32 {
+    UNCOMPRESSED_GRAYSCALE = 1
+    UNCOMPRESSED_GRAY_ALPHA
+    UNCOMPRESSED_R5G6B5
+    UNCOMPRESSED_R8G8B8
+    UNCOMPRESSED_R5G5B5A1
+    UNCOMPRESSED_R4G4B4A4
+    UNCOMPRESSED_R8G8B8A8
+    UNCOMPRESSED_R32
+    UNCOMPRESSED_R32G32B32
+    UNCOMPRESSED_R32G32B32A32
+    COMPRESSED_DXT1_RGB
+    COMPRESSED_DXT1_RGBA
+    COMPRESSED_DXT3_RGBA
+    COMPRESSED_DXT5_RGBA
+    COMPRESSED_ETC1_RGB
+    COMPRESSED_ETC2_RGB
+    COMPRESSED_ETC2_EAC_RGBA
+    COMPRESSED_PVRT_RGB
+    COMPRESSED_PVRT_RGBA
+    COMPRESSED_ASTC_4x4_RGBA
+    COMPRESSED_ASTC_8x8_RGBA
+}
+
+enum TextureFilter: u32 {
+    POINT = 0
+    BILINEAR
+    TRILINEAR
+    ANISOTROPIC_4X
+    ANISOTROPIC_8X
+    ANISOTROPIC_16X
+}
+
+enum TextureWrap: u32 {
+    REPEAT = 0
+    CLAMP
+    MIRROR_REPEAT
+    MIRROR_CLAMP
+}
+
+enum CubemapLayout: u32 {
+    AUTO_DETECT = 0
+    LINE_VERTICAL
+    LINE_HORIZONTAL
+    CROSS_THREE_BY_FOUR
+    CROSS_FOUR_BY_THREE
+    PANORAMA
+}
+
+enum FontType: u32 {
+    DEFAULT = 0
+    BITMAP
+    SDF
+}
+
+enum BlendMode: u32 {
+    ALPHA = 0
+    ADDITIVE
+    MULTIPLIED
+    ADD_COLORS
+    SUBTRACT_COLORS
+    CUSTOM
+}
+
+enum Gesture: u32 {
+    NONE = 0
+    TAP = 1
+    DOUBLETAP = 2
+    HOLD = 4
+    DRAG = 8
+    SWIPE_RIGHT = 16
+    SWIPE_LEFT = 32
+    SWIPE_UP = 64
+    SWIPE_DOWN = 128
+    PINCH_IN = 256
+    PINCH_OUT = 512
+}
+
+enum CameraMode: u32 {
+    CUSTOM = 0
+    FREE
+    ORBITAL
+    FIRST_PERSON
+    THIRD_PERSON
+}
+
+enum CameraProjection: u32 {
+    PERSPECTIVE = 0
+    ORTHOGRAPHIC
+}
+
+enum NPatchLayout: u32 {
+    NINE_PATCH = 0
+    THREE_PATCH_VERTICAL
+    THREE_PATCH_HORIZONTAL
+}
+
+// NOTE: there's no way to add extern "C". Needs to be done manually
+extern function InitWindow(width: i32, height: i32, title: raw c_char)
+extern function WindowShouldClose() -> bool
+extern function CloseWindow()
+extern function IsWindowReady() -> bool
+extern function IsWindowFullscreen() -> bool
+extern function IsWindowHidden() -> bool
+extern function IsWindowMinimized() -> bool
+extern function IsWindowMaximized() -> bool
+extern function IsWindowFocused() -> bool
+extern function IsWindowResized() -> bool
+extern function IsWindowState(anonymous flag: u32) -> bool
+extern function SetWindowState(anonymous flags: u32)
+extern function ClearWindowState(anonymous flags: u32)
+extern function ToggleFullscreen()
+extern function MaximizeWindow()
+extern function MinimizeWindow()
+extern function RestoreWindow()
+extern function SetWindowIcon(anonymous image: Image)
+extern function SetWindowTitle(anonymous title: raw c_char)
+extern function SetWindowPosition(x: i32, y: i32)
+extern function SetWindowMonitor(anonymous monitor: i32)
+extern function SetWindowMinSize(x: i32, y: i32)
+extern function SetWindowSize(x: i32, y: i32)
+extern function GetWindowHandle() -> raw void
+extern function GetScreenWidth() -> i32
+extern function GetScreenHeight() -> i32
+extern function GetMonitorCount() -> i32
+extern function GetCurrentMonitor() -> i32
+extern function GetMonitorPosition(anonymous monitor: i32) -> Vector2
+extern function GetMonitorWidth(anonymous monitor: i32) -> i32
+extern function GetMonitorHeight(anonymous monitor: i32) -> i32
+extern function GetMonitorPhysicalWidth(anonymous monitor: i32) -> i32
+extern function GetMonitorPhysicalHeight(anonymous monitor: i32) -> i32
+extern function GetMonitorRefreshRate(anonymous monitor: i32) -> i32
+extern function GetWindowPosition() -> Vector2
+extern function GetWindowScaleDPI() -> Vector2
+extern function GetMonitorName(anonymous monitor: i32) -> raw c_char
+extern function SetClipboardText(anonymous text: raw c_char)
+extern function GetClipboardText() -> raw c_char
+extern function SwapScreenBuffer()
+extern function PollInputEvents()
+extern function WaitTime(anonymous ms: f32)
+extern function ShowCursor()
+extern function HideCursor()
+extern function IsCursorHidden() -> bool
+extern function EnableCursor()
+extern function DisableCursor()
+extern function IsCursorOnScreen() -> bool
+extern function ClearBackground(anonymous color: Color)
+extern function BeginDrawing()
+extern function EndDrawing()
+extern function BeginMode2D(anonymous camera: Camera2D)
+extern function EndMode2D()
+extern function BeginMode3D(anonymous camera: Camera3D)
+extern function EndMode3D()
+extern function BeginTextureMode(anonymous target: RenderTexture)
+extern function EndTextureMode()
+extern function BeginShaderMode(anonymous shader: Shader)
+extern function EndShaderMode()
+extern function BeginBlendMode(anonymous mode: i32)
+extern function EndBlendMode()
+extern function BeginScissorMode(x: i32, y: i32, width: i32, height: i32)
+extern function EndScissorMode()
+extern function BeginVrStereoMode(anonymous config: VrStereoConfig)
+extern function EndVrStereoMode()
+extern function LoadVrStereoConfig(anonymous device: VrDeviceInfo) -> VrStereoConfig
+extern function UnloadVrStereoConfig(anonymous config: VrStereoConfig)
+
+// Shader management functions
+// NOTE: Shader functionality is not available on OpenGL 1.1
+extern function LoadShader(vsFileName: raw c_char, fsFileName: raw c_char) -> Shader
+extern function LoadShaderFromMemory(vsCode: raw c_char, fsCode: raw c_char) -> Shader
+extern function GetShaderLocation(shader: Shader, uniformName: raw c_char) -> i32
+extern function GetShaderLocationAttrib(shader: Shader, attribName: raw c_char) -> i32
+extern function SetShaderValue(shader: Shader, locIndex: i32, value: raw void, uniformType: i32)
+extern function SetShaderValueV(shader: Shader, locIndex: i32, value: raw void, uniformType: i32, count: i32)
+extern function SetShaderValueMatrix(shader: Shader, locIndex: i32, mat: Matrix)
+extern function SetShaderValueTexture(shader: Shader, locIndex: i32, texture: Texture)
+extern function UnloadShader(shader: Shader)
+
+// Screen-space-related functions
+extern function GetMouseRay(mousePosition: Vector2, camera: Camera3D)
+extern function GetCameraMatrix(anonymous camera: Camera3D)
+extern function GetCameraMatrix2D(anonymous camera: Camera2D)
+extern function GetWorldToScreen(position: Vector3, camera: Camera3D)
+extern function GetWorldToScreenEx(position: Vector3, camera: Camera3D, width: i32, height: i32)
+extern function GetWorldToScreen2D(position: Vector2, camera: Camera2D)
+extern function GetScreenToWorld2D(position: Vector2, camera: Camera2D)
+
+// Timing-related functions
+extern function SetTargetFPS(anonymous fps: i32)
+extern function GetFPS() -> i32
+extern function GetFrameTime() -> f32
+extern function GetTIme() -> f64
+
+// Misc. functions
+extern function GetRandomValue(min: i32, max: i32) -> i32
+extern function SetRandomSeed(anonymous seed: u32)
+extern function TakeScreenshot(anonymous fileName: raw c_char)
+extern function SetConfigFlags(anonymous flags: u32)
+
+// NOTE: Jakt does not support variadic parameters
+extern function TraceLog(logLevel: i32, text: raw c_char)
+extern function SetTraceLogLevel(anonymous logLevel: i32)
+extern function MemAlloc(anonymous size: i32) -> raw void
+extern function MemRealloc(ptr: raw void, size: i32) -> raw void
+extern function MemFree(anonymous ptr: raw void)
+
+// NOTE: Jakt does not support callbacks
+// // Set custom callbacks
+// // WARNING: Callbacks setup is intended for advance users
+// RLAPI void SetTraceLogCallback(TraceLogCallback callback);         // Set custom trace log
+// RLAPI void SetLoadFileDataCallback(LoadFileDataCallback callback); // Set custom file binary data loader
+// RLAPI void SetSaveFileDataCallback(SaveFileDataCallback callback); // Set custom file binary data saver
+// RLAPI void SetLoadFileTextCallback(LoadFileTextCallback callback); // Set custom file text data loader
+// RLAPI void SetSaveFileTextCallback(SaveFileTextCallback callback); // Set custom file text data saver
+
+// Files management functions
+extern function LoadFileData(fileName: raw c_char, bytesRead: raw u32) -> raw u8
+extern function UnloadFileData(anonymous data: raw u8)
+extern function SaveFileData()
+extern function LoadFileText(anonymous fileName: raw c_char) -> raw c_char
+extern function UnloadFileText(anonymous text: raw c_char)
+extern function SaveFileText(fileName: raw c_char, text: raw c_char) -> bool
+extern function FileExists(anonymous fileName: raw c_char) -> bool
+extern function DirectoryExists(anonymous dirPath: raw c_char) -> bool
+extern function IsFileExtension(fileName: raw c_char, ext: raw c_char) -> bool
+extern function GetFileExtension(anonymous fileName: raw c_char) -> raw c_char
+extern function GetFileName(anonymous filePath: raw c_char) -> raw c_char
+extern function GetFileNameWithoutExt(anonymous filePath: raw c_char) -> raw c_char
+extern function GetDirectoryPath(anonymous filePath: raw c_char) -> raw c_char
+extern function GetPrevDirectoryPath(anonymous filePath: raw c_char) -> raw c_char
+extern function GetWorkingDirectory() -> raw c_char
+extern function GetDirectoryFiles(dirPath: raw raw c_char, count: raw i32) -> raw raw c_char
+extern function ClearDirectoryFiles()
+extern function ChangeDirectory(anonymous dir: raw c_char) -> bool
+extern function IsFileDropped() -> bool
+extern function GetDroppedFiles(anonymous count: raw i32) -> raw raw c_char
+extern function ClearDroppedFiles()
+extern function GetFileModTime(anonymous fileName: raw c_char) -> i64
+
+// Compression/Encoding functionality
+extern function CompressData(data: raw u8, dataLength: i32, compDataLength: raw i32) -> raw u8
+extern function DecompressData(compData: raw u8, compDataLength: i32, dataLength: raw i32) -> raw u8
+extern function EncodeDataBase64(data: raw u8, dataLength: i32, outputLength: raw i32) -> raw c_char
+extern function DecodeDataBase64(data: raw u8, outputLength: raw i32) -> raw u8
+
+extern function SaveStorageValue(position: u32, value: i32) -> bool
+extern function LoadStorageValue(anonymous position: u32) -> i32
+
+extern function OpenURL(anonymous url: raw c_char)
+
+// Input-related functions: keyboard
+extern function IsKeyPressed(anonymous key: i32) -> bool
+extern function IsKeyDown(anonymous key: i32) -> bool
+extern function IsKeyReleased(anonymous key: i32) -> bool
+extern function IsKeyUp(anonymous key: i32) -> bool
+extern function SetExitKey(anonymous key: i32)
+extern function GetKeyPressed() -> i32
+extern function GetCharPressed() -> i32
+
+// Input-related functions: gamepads
+extern function IsGamepadAvailable(anonymous gameped: i32) -> bool
+extern function GetGamepadName(anonymous gameped: i32) -> raw c_char
+extern function IsGamepadButtonPressed(gameped: i32, button: i32) -> bool
+extern function IsGamepadButtonDown(gameped: i32, button: i32) -> bool
+extern function IsGamepadButtonReleased(gameped: i32, button: i32) -> bool
+extern function IsGamepadButtonUp(gameped: i32, button: i32) -> bool
+extern function GetGamepadButtonPressed() -> i32
+extern function GetGamepadAxisCount(anonymous gameped: i32) -> i32
+extern function GetGamepadAxisMovement(gameped: i32, axis: i32) -> f32
+extern function SetGamepadMappings(anonymous mappings: raw c_char) -> i32
+
+// Input-related functions: mouse
+extern function IsMouseButtonPressed(button: i32) -> bool
+extern function IsMouseButtonDown(button: i32) -> bool
+extern function IsMouseButtonReleased(button: i32) -> bool
+extern function IsMouseButtonUp(button: i32) -> bool
+extern function GetMouseX() -> i32
+extern function GetMouseY() -> i32
+extern function GetMousePosition() -> Vector2
+extern function GetMouseDelta() -> Vector2
+extern function SetMousePosition(x: i32, y: i32)
+extern function SetMouseOffset(offsetX: i32, offsetY: i32)
+extern function SetMouseScale(scaleX: f32, scaleY: f32)
+extern function GetMouseWheelMove() -> f32
+extern function SetMouseCursor(cursor: i32)
+
+extern function GetTouchX() -> i32
+extern function GetTouchY() -> i32
+extern function GetTouchPosition(anonymous index: i32) -> Vector2
+extern function GetTouchPointId(anonymous index: i32) -> i32
+extern function GetTouchPointCount() -> i32
+
+extern function SetGesturesEnabled(anonymous flags: u32)
+extern function IsGestureDetected(anonymous gesture: i32) -> bool
+extern function GetGestureDetected() -> i32
+extern function GetGestureHoldDuration() -> f32
+extern function GetGestureDragVector() -> Vector2
+extern function GetGestureDragAngle() -> f32
+extern function GetGesturePinchVector() -> Vector2
+extern function GetGesturePinchAngle() -> f32
+
+extern function SetCameraMode(camera: Camera3D, mode: i32)
+extern function UpdateCamera(anonymous camera: raw Camera3D)
+
+extern function SetCameraPanControl(anonymous keyPan: i32)
+extern function SetCameraAltControl(anonymous keyAlt: i32)
+extern function SetCameraSmoothZoomControl(anonymous keySmoothZoom: i32)
+extern function SetCameraMoveControls(keyFront: i32, keyBack: i32, keyRight: i32, keyLeft: i32, keyUp: i32, keyDown: i32)
+
+extern function SetShapesTexture(texture: Texture, source: Rectangle)
+
+// Basic shapes drawing functions
+extern function DrawPixel(posX: i32, posY: i32, color: Color)
+extern function DrawPixelV(position: Vector2, color: Color)
+extern function DrawLine(startPosX: i32, startPosY: i32, endPosX: i32, endPosY: i32, color: Color)
+extern function DrawLineV(startPos: Vector2, endPos: Vector2, color: Color)
+extern function DrawLineEx(startPos: Vector2, endPos: Vector2, thick: f32, color: Color)
+extern function DrawLineBezier(startPos: Vector2, endPos: Vector2, thick: f32, color: Color)
+extern function DrawLineBezierQuad(startPos: Vector2, endPos: Vector2, controlPos: Vector2, thick: f32, color: Color)
+extern function DrawLineBezierCubic(startPos: Vector2, endPos: Vector2, startControlPos: Vector2, endControlPos: Vector2, thick: f32, color: Color)
+extern function DrawLineStrip(points: Vector2, pointCount: i32, color: Color)
+extern function DrawCircle(centerX: i32, centerY: i32, radius: f32, color: Color)
+extern function DrawCircleSector(center: Vector2, radius: f32, startAngle: f32, endAngle: f32, segments: i32, color: Color)
+extern function DrawCircleSectorLines(center: Vector2, radius: f32, startAngle: f32, endAngle: f32, segments: i32, color: Color)
+extern function DrawCircleGradient(centerX: i32, centerY: i32, radius: f32, color1: Color, color2: Color)
+extern function DrawCircleV(center: Vector2, radius: f32, color: Color)
+extern function DrawCircleLines(centerX: i32, centerY: i32, radius: f32, color: Color)
+extern function DrawEllipse(centerX: i32, centerY: i32, radiusH: f32, radiusV: f32, color: Color)
+extern function DrawEllipseLines(centerX: i32, centerY: i32, radiusH: f32, radiusV: f32, color: Color)
+extern function DrawRing(center: Vector2, innerRadius: f32, outerRadius: f32, startAngle: f32, endAngle: f32, segments: i32, color: Color)
+extern function DrawRingLines(center: Vector2, innerRadius: f32, outerRadius: f32, startAngle: f32, endAngle: f32, segments: i32, color: Color)
+extern function DrawRectangle(posX: i32, posY: i32, width: i32, height: i32, color: Color)
+extern function DrawRectangleV(position: Vector2, size: Vector2, color: Color)
+extern function DrawRectangleRec(rec: Rectangle, color: Color)
+extern function DrawRectanglePro(rec: Rectangle, origin: Vector2, rotation: f32, color: Color)
+extern function DrawRectangleGradientV(posX: i32, posY: i32, width: i32, height: i32, color1: Color, color2: Color)
+extern function DrawRectangleGradientH(posX: i32, posY: i32, width: i32, height: i32, color1: Color, color2: Color)
+extern function DrawRectangleGradientEx(rec: Rectangle, col1: Color, col2: Color, col3: Color, col4: Color)
+extern function DrawRectangleLines(posX: i32, posY: i32, width: i32, height: i32, color: Color)
+extern function DrawRectangleLinesEx(rec: Rectangle, lineThick: f32, color: Color)
+extern function DrawRectangleRounded(rec: Rectangle, roundness: f32, segments: i32, color: Color)
+extern function DrawRectangleRoundedLines(rec: Rectangle, roundness: f32, segments: i32, lineThick: f32, color: Color)
+extern function DrawTriangle(v1: Vector2, v2: Vector2, v3: Vector2, color: Color)
+extern function DrawTriangleLines(v1: Vector2, v2: Vector2, v3: Vector2, color: Color)
+extern function DrawTriangleFan(points: raw Vector2, pointCount: i32, color: Color)
+extern function DrawTriangleStrip(points: raw Vector2, pointCount: i32, color: Color)
+extern function DrawPoly(center: Vector2, sides: i32, radius: f32, rotation: f32, color: Color)
+extern function DrawPolyLines(center: Vector2, sides: i32, radius: f32, rotation: f32, color: Color)
+extern function DrawPolyLinesEx(center: Vector2, sides: i32, radius: f32, rotation: f32, lineThick: f32, color: Color)
+
+// Basic shapes collision detection functions
+extern function CheckCollisionRecs(rec1: Rectangle, rec2: Rectangle) -> bool
+extern function CheckCollisionCircles(center1: Vector2, radius1: f32, center2: Vector2, radius2: f32) -> bool
+extern function CheckCollisionCircleRec(center: Vector2, radius: f32, rec: Rectangle) -> bool
+extern function CheckCollisionPointRec(point: Vector2, rec: Rectangle) -> bool
+extern function CheckCollisionPointCircle(point: Vector2, center: Vector2, radius: f32) -> bool
+extern function CheckCollisionPointTriangle(point: Vector2, p1: Vector2, p2: Vector2, p3: Vector2) -> bool
+extern function CheckCollisionLines(startPos1: Vector2, endPos1: Vector2, startPos2: Vector2, endPos2: Vector2, collisionPoint: raw Vector2) -> bool
+extern function CheckCollisionPointLine(point: Vector2, p1: Vector2, p2: Vector2, threshold: i32) -> bool
+extern function GetCollisionRec(rec1: Rectangle, rec2: Rectangle) -> Rectangle
+
+// loading: Image functions
+// NOTE: This functions do not require GPU access
+extern function LoadImage(anonymous fileName: raw c_char) -> Image
+extern function LoadImageRaw(fileName: raw c_char, width: i32, height: i32, format: i32, headerSize: i32) -> Image
+extern function LoadImageAnim(fileName: raw c_char, frames: raw i32) -> Image
+extern function LoadImageFromMemory(fileType: raw c_char, fileData: raw u8, dataSize: i32) -> Image
+extern function LoadImageFromTexture(texture: Texture) -> Image
+extern function LoadImageFromScreen() -> Image
+extern function UnloadImage(anonymous image: Image)
+extern function ExportImage(image: Image, fileName: raw c_char) -> bool
+extern function ExportImageAsCode(image: Image, fileName: raw c_char) -> bool
+
+// generation: Image functions
+extern function GenImageColor(width: i32, height: i32, color: Color) -> Image
+extern function GenImageGradientV(width: i32, height: i32, top: Color, bottom: Color) -> Image
+extern function GenImageGradientH(width: i32, height: i32, left: Color, right: Color) -> Image
+extern function GenImageGradientRadial(width: i32, height: i32, density: f32, inner: Color, outer: Color) -> Image
+extern function GenImageChecked(width: i32, height: i32, checksX: i32, checksY: i32, col1: Color, col2: Color) -> Image
+extern function GenImageWhiteNoise(width: i32, height: i32, factor: f32) -> Image
+extern function GenImageCellular(width: i32, height: i32, tileSize: i32) -> Image
+
+// manipulation: Image functions
+extern function ImageCopy(anonymous image: Image) -> Image
+extern function ImageFromImage(image: Image, rec: Rectangle) -> Image
+extern function ImageText(text: raw c_char, fontSize: i32, color: Color) -> Image
+extern function ImageTextEx(font: Font, text: raw c_char, fontSize: f32, spacing: f32, tint: Color) -> Image
+extern function ImageFormat(image: raw Image, newFormat: i32)
+extern function ImageToPOT(image: raw Image, fill: Color)
+extern function ImageCrop(image: raw Image, crop: Rectangle)
+extern function ImageAlphaCrop(image: raw Image, threshold: f32)
+extern function ImageAlphaClear(image: raw Image, color: Color, threshold: f32)
+extern function ImageAlphaMask(image: raw Image, alphaMask: Image)
+extern function ImageAlphaPremultiply(anonymous image: raw Image)
+extern function ImageResize(image: raw Image, newWidth: i32, newHeight: i32)
+extern function ImageResizeNN(image: raw Image, newWidth: i32, newHeight: i32)
+extern function ImageResizeCanvas(image: raw Image, newWidth: i32, newHeight: i32, offsetX: i32, offsetY: i32, fill: Color)
+extern function ImageMipmaps(image: raw Image)
+extern function ImageDither(image: raw Image, rBpp: i32, gBpp: i32, bBpp: i32, aBpp: i32)
+extern function ImageFlipVertical(image: raw Image)
+extern function ImageFlipHorizontal(image: raw Image)
+extern function ImageRotateCW(image: raw Image)
+extern function ImageRotateCCW(image: raw Image)
+extern function ImageColorTint(image: raw Image, color: Color)
+extern function ImageColorInvert(image: raw Image)
+extern function ImageColorGrayscale(image: raw Image)
+extern function ImageColorContrast(image: raw Image, contrast: f32)
+extern function ImageColorBrightness(image: raw Image, brightness: i32)
+extern function ImageColorReplace(image: raw Image, color: Color, replace: Color)
+extern function LoadImageColors(anonymous image: Image) -> raw Color
+extern function LoadImagePalette(image: Image, maxPaletteSize: i32, colorCount: raw i32) -> raw Color
+extern function UnloadImageColors(colors: raw Color)
+extern function UnloadImagePalette(colors: raw Color)
+extern function GetImageAlphaBorder(image: Image, threshold: f32) -> Rectangle
+extern function GetImageColor(image: Image, x: i32, y: i32) -> Color
+
+// drawing: Image functions
+// NOTE: software: Image-rendering functions (CPU)
+extern function ImageClearBackground(dst: raw Image, color: Color)
+extern function ImageDrawPixel(dst: raw Image, posX: i32, posY: i32, color: Color)
+extern function ImageDrawPixelV(dst: raw Image, position: Vector2, color: Color)
+extern function ImageDrawLine(dst: raw Image, startPosX: i32, startPosY: i32, endPosX: i32, endPosY: i32, color: Color)
+extern function ImageDrawLineV(dst: raw Image, start: Vector2, end: Vector2, color: Color)
+extern function ImageDrawCircle(dst: raw Image, centerX: i32, centerY: i32, radius: i32, color: Color)
+extern function ImageDrawCircleV(dst: raw Image, center: Vector2, radius: i32, color: Color)
+extern function ImageDrawRectangle(dst: raw Image, posX: i32, posY: i32, width: i32, height: i32, color: Color)
+extern function ImageDrawRectangleV(dst: raw Image, position: Vector2, size: Vector2, color: Color)
+extern function ImageDrawRectangleRec(dst: raw Image, rec: Rectangle, color: Color)
+extern function ImageDrawRectangleLines(dst: raw Image, rec: Rectangle, thick: i32, color: Color)
+extern function ImageDraw(dst: raw Image, src: Image, srcRec: Rectangle, dstRec: Rectangle, tint: Color)
+extern function ImageDrawText(dst: raw Image, text: raw c_char, posX: i32, posY: i32, fontSize: i32, color: Color)
+extern function ImageDrawTextEx(dst: raw Image, font: Font, text: raw c_char, position: Vector2, fontSize: f32, spacing: f32, tint: Color)
+
+
+// Texture loading functions
+// NOTE: These functions require GPU access
+extern function LoadTexture(anonymous fileName: raw c_char) -> Texture
+extern function LoadTextureFromImage(anonymous image: Image) -> Texture
+extern function LoadTextureCubemap(image: Image, layout: i32) -> Texture
+extern function LoadRenderTexture(width: i32, height: i32) -> RenderTexture
+extern function UnloadTexture(anonymous texture: Texture)
+extern function UnloadRenderTexture(anonymous target: RenderTexture)
+extern function UpdateTexture(texture: Texture, pixels: raw void)
+extern function UpdateTextureRec(texture: Texture, rec: Rectangle, pixels: raw void)
+
+// Texture configuration functions
+extern function GenTextureMipmaps(anonymous texture: Texture)
+extern function SetTextureFilter(texture: Texture, filter: i32)
+extern function SetTextureWrap(texture: Texture, wrap: i32)
+
+// Texture drawing functions
+extern function DrawTexture(texture: Texture, posX: i32, posY: i32, tint: Color)
+extern function DrawTextureV(texture: Texture, position: Vector2, tint: Color)
+extern function DrawTextureEx(texture: Texture, position: Vector2, rotation: f32, scale: f32, tint: Color)
+extern function DrawTextureRec(texture: Texture, source: Rectangle, position: Vector2, tint: Color)
+extern function DrawTextureQuad(texture: Texture, tiling: Vector2, offset: Vector2, quad: Rectangle, tint: Color)
+extern function DrawTextureTiled(texture: Texture, source: Rectangle, dest: Rectangle, origin: Vector2, rotation: f32, scale: f32, tint: Color)
+extern function DrawTexturePro(texture: Texture, source: Rectangle, dest: Rectangle, origin: Vector2, rotation: f32, tint: Color)
+extern function DrawTextureNPatch(texture: Texture, nPatchInfo: NPatchInfo, dest: Rectangle, origin: Vector2, rotation: f32, tint: Color)
+extern function DrawTexturePoly(texture: Texture, center: Vector2, points: raw Vector2, texcoords: raw Vector2, pointCount: i32, tint: Color)
+
+// Color/pixel related functions
+extern function Fade(color: Color, alpha: f32) -> Color
+extern function ColorToInt(anonymous color: Color) -> i32
+extern function ColorNormalize(anonymous color: Color) -> Vector4
+extern function ColorFromNormalized(anonymous normalized: Vector4) -> Color
+extern function ColorToHSV(anonymous color: Color) -> Vector3
+extern function ColorFromHSV(hue: f32, saturation: f32, value: f32) -> Color
+extern function ColorAlpha(color: Color, alpha: f32) -> Color
+extern function ColorAlphaBlend(dst: Color, src: Color, tint: Color) -> Color
+extern function GetColor(anonymous hexValue: u32) -> Color
+extern function GetPixelColor(srcPtr: raw void, format: i32) -> Color
+extern function SetPixelColor(dstPtr: raw void, color: Color, format: i32)
+extern function GetPixelDataSize(width: i32, height: i32, format: i32) -> i32
+
+// Font loading/unloading functions
+extern function GetFontDefault() -> Font
+extern function LoadFont(anonymous fileName: raw c_char) -> Font
+extern function LoadFontEx(fileName: raw c_char, fontSize: i32, fontChars: raw i32, glyphCount: i32) -> Font
+extern function LoadFontFromImage(image: Image, key: Color, firstChar: i32) -> Font
+extern function LoadFontFromMemory(fileType: raw c_char, fileData: raw c_char, dataSize: i32, fontSize: i32, fontChars: raw i32, glyphCount: i32) -> Font
+extern function LoadFontData(fileData: raw c_char, dataSize: i32, fontSize: i32, fontChars: raw i32, glyphCount: i32, type: i32) -> raw GlyphInfo
+extern function GenImageFontAtlas(chars: raw GlyphInfo, recs: raw raw Rectangle, glyphCount: i32, fontSize: i32, padding: i32, packMethod: i32) -> Image
+extern function UnloadFontData(chars: raw GlyphInfo, glyphCount: i32)
+extern function UnloadFont(anonymous font: Font)
+
+// Text drawing functions
+extern function DrawFPS(posX: i32, posY: i32)
+extern function DrawText(text: raw c_char, x: i32, y: i32, size: i32, color: Color)
+extern function DrawTextEx(font: Font, text: raw c_char, position: Vector2, fontSize: f32, spacing: f32, tint: Color)
+extern function DrawTextPro(font: Font, text: raw c_char, position: Vector2, origin: Vector2, rotation: f32, fontSize: f32, spacing: f32, tint: Color)
+extern function DrawTextCodepoint(font: Font, codepoint: i32, position: Vector2, fontSize: f32, tint: Color)
+
+// Text font info functions
+extern function MeasureText(text: raw c_char, fontSize: i32) -> i32
+extern function MeasureTextEx(font: Font, text: raw c_char, fontSize: f32, spacing: f32) -> Vector2
+extern function GetGlyphIndex(font: Font, codepoint: i32) -> i32
+extern function GetGlyphInfo(font: Font, codepoint: i32) -> GlyphInfo
+extern function GetGlyphAtlasRec(font: Font, codepoint: i32) -> Rectangle
+
+// Text codepoints management functions (unicode characters)
+extern function LoadCodepoints(text: raw c_char, count: raw i32) -> raw i32
+extern function UnloadCodepoints(anonymous codepoints: raw i32)
+extern function GetCodepointCount(anonymous text: raw c_char) -> i32
+extern function GetCodepoint(text: raw c_char, bytesProcessed: raw i32) -> i32
+extern function CodepointToUTF8(codepoint: i32, byteSize: raw i32) -> raw c_char
+extern function TextCodepointsToUTF8(codepoints: raw i32, length: i32) -> raw c_char
+
+// Text strings management functions (no UTF-8 strings, only byte chars)
+// NOTE: Some strings allocate memory internally for returned strings, just be careful!
+extern function TextCopy(dst: raw c_char, src: raw c_char) -> i32
+extern function TextIsEqual(text1: raw c_char, text2: raw c_char) -> bool
+extern function TextLength(text: raw c_char) -> u32
+// extern function TextFormat(text: raw c_char, ...) -> raw c_char
+extern function TextSubtext(text: raw c_char, position: i32, length: i32) -> raw c_char
+extern function TextReplace(text: raw c_char, replace: raw c_char, by: raw c_char) -> raw c_char
+extern function TextInsert(text: raw c_char, insert: raw c_char, position: i32) -> raw c_char
+extern function TextJoin(textList: raw raw c_char, count: i32, delimiter: raw c_char) -> raw c_char
+extern function TextSplit(text: raw c_char, delimiter: c_char, count: raw i32) -> raw c_char
+extern function TextAppend(text: raw c_char, append: raw c_char, position: raw i32)
+extern function TextFindIndex(text: raw c_char, find: raw c_char) -> i32
+extern function TextToUpper(text: raw c_char) -> raw c_char
+extern function TextToLower(text: raw c_char) -> raw c_char
+extern function TextToPascal(text: raw c_char) -> raw c_char
+extern function TextToInteger(text: raw c_char) -> i32
+
+
+// Basic geometric 3D shapes drawing functions
+extern function DrawLine3D(startPos: Vector3, endPos: Vector3, color: Color)
+extern function DrawPoint3D(position: Vector3, color: Color)
+extern function DrawCircle3D(center: Vector3, radius: f32, rotationAxis: Vector3, rotationAngle: f32, color: Color)
+extern function DrawTriangle3D(v1: Vector3, v2: Vector3, v3: Vector3, color: Color)
+extern function DrawTriangleStrip3D(points: raw Vector3, pointCount: i32, color: Color)
+extern function DrawCube(position: Vector3, width: f32, height: f32, length: f32, color: Color)
+extern function DrawCubeV(position: Vector3, size: Vector3, color: Color)
+extern function DrawCubeWires(position: Vector3, width: f32, height: f32, length: f32, color: Color)
+extern function DrawCubeWiresV(position: Vector3, size: Vector3, color: Color)
+extern function DrawCubeTexture(texture: Texture, position: Vector3, width: f32, height: f32, length: f32, color: Color)
+extern function DrawCubeTextureRec(texture: Texture, source: Rectangle, position: Vector3, width: f32, height: f32, length: f32, color: Color)
+extern function DrawSphere(centerPos: Vector3, radius: f32, color: Color)
+extern function DrawSphereEx(centerPos: Vector3, radius: f32, rings: i32, slices: i32, color: Color)
+extern function DrawSphereWires(centerPos: Vector3, radius: f32, rings: i32, slices: i32, color: Color)
+extern function DrawCylinder(position: Vector3, radiusTop: f32, radiusBottom: f32, height: f32, slices: i32, color: Color)
+extern function DrawCylinderEx(startPos: Vector3, endPos: Vector3, startRadius: f32, endRadius: f32, sides: i32, color: Color)
+extern function DrawCylinderWires(position: Vector3, radiusTop: f32, radiusBottom: f32, height: f32, slices: i32, color: Color)
+extern function DrawCylinderWiresEx(startPos: Vector3, endPos: Vector3, startRadius: f32, endRadius: f32, sides: i32, color: Color)
+extern function DrawPlane(centerPos: Vector3, size: Vector2, color: Color)
+extern function DrawRay(ray: Ray, color: Color)
+extern function DrawGrid(slices: i32, spacing: f32)
+
+// Model management functions
+extern function LoadModel(anonymous fileName: raw c_char) -> Model
+extern function LoadModelFromMesh(anonymous mesh: Mesh) -> Model
+extern function UnloadModel(anonymous model: Model)
+extern function UnloadModelKeepMeshes(anonymous model: Model)
+extern function GetModelBoundingBox(anonymous model: Model) -> BoundingBox
+
+// Model drawing functions
+extern function DrawModel(model: Model, position: Vector3, scale: f32, tint: Color)
+extern function DrawModelEx(model: Model, position: Vector3, rotationAxis: Vector3, rotationAngle: f32, scale: Vector3, tint: Color)
+extern function DrawModelWires(model: Model, position: Vector3, scale: f32, tint: Color)
+extern function DrawModelWiresEx(model: Model, position: Vector3, rotationAxis: Vector3, rotationAngle: f32, scale: Vector3, tint: Color)
+extern function DrawBoundingBox(box: BoundingBox, color: Color)
+extern function DrawBillboard(camera: Camera3D, texture: Texture, position: Vector3, size: f32, tint: Color)
+extern function DrawBillboardRec(camera: Camera3D, texture: Texture, source: Rectangle, position: Vector3, size: Vector2, tint: Color)
+extern function DrawBillboardPro(camera: Camera3D, texture: Texture, source: Rectangle, position: Vector3, up: Vector3, size: Vector2, origin: Vector2, rotation: f32, tint: Color)
+
+// Mesh management functions
+extern function UploadMesh(mesh: raw Mesh, dynamic: bool)
+extern function UpdateMeshBuffer(mesh: Mesh, index: i32, data: raw void, dataSize: i32, offset: i32)
+extern function UnloadMesh(anonymous mesh: Mesh)
+extern function DrawMesh(mesh: Mesh, material: Material, transform: Material)
+extern function DrawMeshInstanced(mesh: Mesh, material: Material, transforms: raw Material, instances: i32)
+extern function ExportMesh(mesh: Mesh, fileName: raw c_char) -> bool
+extern function GetMeshBoundingBox(anonymous mesh: Mesh) -> BoundingBox
+extern function GenMeshTangents(anonymous mesh: raw Mesh)
+extern function GenMeshBinormals(anonymous mesh: raw Mesh)
+
+// Mesh generation functions
+extern function GenMeshPoly(sides: i32, radius: f32) -> Mesh
+extern function GenMeshPlane(width: f32, length: f32, resX: i32, resZ: i32) -> Mesh
+extern function GenMeshCube(width: f32, height: f32, length: f32) -> Mesh
+extern function GenMeshSphere(radius: f32, rings: i32, slices: i32) -> Mesh
+extern function GenMeshHemiSphere(radius: f32, rings: i32, slices: i32) -> Mesh
+extern function GenMeshCylinder(radius: f32, height: f32, slices: i32) -> Mesh
+extern function GenMeshCone(radius: f32, height: f32, slices: i32) -> Mesh
+extern function GenMeshTorus(radius: f32, size: f32, radSeg: i32, sides: i32) -> Mesh
+extern function GenMeshKnot(radius: f32, size: f32, radSeg: i32, sides: i32) -> Mesh
+extern function GenMeshHeightmap(heightmap: Image, size: Vector3) -> Mesh
+extern function GenMeshCubicmap(cubicmap: Image, cubeSize: Vector3) -> Mesh
+
+// loading: Material/unloading functions
+extern function LoadMaterials(fileName: raw c_char, materialCount: raw i32) -> raw Material
+extern function LoadMaterialDefault() -> Material
+extern function UnloadMaterial(anonymous material: Material)
+extern function SetMaterialTexture(material: raw Material, mapType: i32, texture: Texture)
+extern function SetModelMeshMaterial(model: raw Model, meshId: i32, materialId: i32)
+
+// Model animations loading/unloading functions
+extern function LoadModelAnimations(fileName: raw c_char, animCount: raw u32) -> raw ModelAnimation
+extern function UpdateModelAnimation(model: Model, anim: ModelAnimation, frame: i32)
+extern function UnloadModelAnimation(anonymous anim: ModelAnimation)
+extern function UnloadModelAnimations(animations: ModelAnimation, count: u32)
+extern function IsModelAnimationValid(model: Model, anim: ModelAnimation) -> bool
+
+// Collision detection functions
+extern function CheckCollisionSpheres(center1: Vector3, radius1: f32, center2: Vector3, radius2: f32) -> bool
+extern function CheckCollisionBoxes(box1: BoundingBox, box2: BoundingBox) -> bool
+extern function CheckCollisionBoxSphere(box: BoundingBox, center: Vector3, radius: f32) -> bool
+extern function GetRayCollisionSphere(ray: Ray, center: Vector3, radius: f32) -> RayCollision
+extern function GetRayCollisionBox(ray: Ray, box: BoundingBox) -> RayCollision
+extern function GetRayCollisionModel(ray: Ray, model: Model) -> RayCollision
+extern function GetRayCollisionMesh(ray: Ray, mesh: Mesh, transform: Material) -> RayCollision
+extern function GetRayCollisionTriangle(ray: Ray, p1: Vector3, p2: Vector3, p3: Vector3) -> RayCollision
+extern function GetRayCollisionQuad(ray: Ray, p1: Vector3, p2: Vector3, p3: Vector3, p4: Vector3) -> RayCollision
+
+// Audio device management functions
+extern function InitAudioDevice()
+extern function CloseAudioDevice()
+extern function IsAudioDeviceReady() -> bool
+extern function SetMasterVolume(anonymous volume: f32)
+
+// Wave/loading: Sound/unloading functions
+extern function LoadWave(anonymous fileName: raw c_char) -> Wave
+extern function LoadWaveFromMemory(fileType: raw c_char, fileData: raw c_char, dataSize: i32) -> Wave
+extern function LoadSound(anonymous fileName: raw c_char) -> Sound
+extern function LoadSoundFromWave(anonymous wave: Wave) -> Sound
+extern function UpdateSound(sound: Sound, data: raw void, sampleCount: i32)
+extern function UnloadWave(anonymous wave: Wave)
+extern function UnloadSound(anonymous sound: Sound)
+extern function ExportWave(wave: Wave, fileName: raw c_char) -> bool
+extern function ExportWaveAsCode(wave: Wave, fileName: raw c_char) -> bool
+
+// Wave/management: Sound functions
+extern function PlaySound(anonymous sound: Sound)
+extern function StopSound(anonymous sound: Sound)
+extern function PauseSound(anonymous sound: Sound)
+extern function ResumeSound(anonymous sound: Sound)
+extern function PlaySoundMulti(anonymous sound: Sound)
+extern function StopSoundMulti()
+extern function GetSoundsPlaying() -> i32
+extern function IsSoundPlaying(anonymous sound: Sound) -> bool
+extern function SetSoundVolume(sound: Sound, volume: f32)
+extern function SetSoundPitch(sound: Sound, pitch: f32)
+extern function WaveFormat(wave: raw Wave, sampleRate: i32, sampleSize: i32, channels: i32)
+extern function WaveCopy(anonymous wave: Wave) -> Wave
+extern function WaveCrop(wave: raw Wave, initSample: i32, finalSample: i32)
+extern function LoadWaveSamples(anonymous wave: Wave) -> raw f32
+extern function UnloadWaveSamples(anonymous samples: raw f32)
+
+// Music management functions
+extern function LoadMusicStream(anonymous fileName: raw c_char) -> Music
+extern function LoadMusicStreamFromMemory(fileType: raw c_char, data: raw u8, dataSize: i32) -> Music
+extern function UnloadMusicStream(anonymous music: Music)
+extern function PlayMusicStream(anonymous music: Music)
+extern function IsMusicStreamPlaying(anonymous music: Music) -> bool
+extern function UpdateMusicStream(anonymous music: Music)
+extern function StopMusicStream(anonymous music: Music)
+extern function PauseMusicStream(anonymous music: Music)
+extern function ResumeMusicStream(anonymous music: Music)
+extern function SeekMusicStream(anonymous music: Music, position: f32)
+extern function SetMusicVolume(anonymous music: Music, volume: f32)
+extern function SetMusicPitch(anonymous music: Music, pitch: f32)
+extern function GetMusicTimeLength(anonymous music: Music) -> f32
+extern function GetMusicTimePlayed(anonymous music: Music) -> f32
+
+// AudioStream management functions
+extern function LoadAudioStream(sampleRate: u32, sampleSize: u32, channels: u32) -> AudioStream
+extern function UnloadAudioStream(anonymous stream: AudioStream)
+extern function UpdateAudioStream(stream: AudioStream, data: raw void, frameCount: i32)
+extern function IsAudioStreamProcessed(anonymous stream: AudioStream) -> bool
+extern function PlayAudioStream(anonymous stream: AudioStream)
+extern function PauseAudioStream(anonymous stream: AudioStream)
+extern function ResumeAudioStream(anonymous stream: AudioStream)
+extern function IsAudioStreamPlaying(anonymous stream: AudioStream) -> bool
+extern function StopAudioStream(anonymous stream: AudioStream)
+extern function SetAudioStreamVolume(stream: AudioStream, volume: f32)
+extern function SetAudioStreamPitch(stream: AudioStream, pitch: f32)
+extern function SetAudioStreamBufferSizeDefault(anonymous size: i32)
