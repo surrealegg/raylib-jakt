@@ -650,17 +650,17 @@ extern function IsWindowMinimized() -> bool
 extern function IsWindowMaximized() -> bool
 extern function IsWindowFocused() -> bool
 extern function IsWindowResized() -> bool
-extern function IsWindowState(anonymous flag: u32) -> bool
-extern function SetWindowState(anonymous flags: u32)
-extern function ClearWindowState(anonymous flags: u32)
+extern function IsWindowState(anon flag: u32) -> bool
+extern function SetWindowState(anon flags: u32)
+extern function ClearWindowState(anon flags: u32)
 extern function ToggleFullscreen()
 extern function MaximizeWindow()
 extern function MinimizeWindow()
 extern function RestoreWindow()
-extern function SetWindowIcon(anonymous image: Image)
-extern function SetWindowTitle(anonymous title: raw c_char)
+extern function SetWindowIcon(anon image: Image)
+extern function SetWindowTitle(anon title: raw c_char)
 extern function SetWindowPosition(x: i32, y: i32)
-extern function SetWindowMonitor(anonymous monitor: i32)
+extern function SetWindowMonitor(anon monitor: i32)
 extern function SetWindowMinSize(x: i32, y: i32)
 extern function SetWindowSize(x: i32, y: i32)
 extern function GetWindowHandle() -> raw void
@@ -668,45 +668,45 @@ extern function GetScreenWidth() -> i32
 extern function GetScreenHeight() -> i32
 extern function GetMonitorCount() -> i32
 extern function GetCurrentMonitor() -> i32
-extern function GetMonitorPosition(anonymous monitor: i32) -> Vector2
-extern function GetMonitorWidth(anonymous monitor: i32) -> i32
-extern function GetMonitorHeight(anonymous monitor: i32) -> i32
-extern function GetMonitorPhysicalWidth(anonymous monitor: i32) -> i32
-extern function GetMonitorPhysicalHeight(anonymous monitor: i32) -> i32
-extern function GetMonitorRefreshRate(anonymous monitor: i32) -> i32
+extern function GetMonitorPosition(anon monitor: i32) -> Vector2
+extern function GetMonitorWidth(anon monitor: i32) -> i32
+extern function GetMonitorHeight(anon monitor: i32) -> i32
+extern function GetMonitorPhysicalWidth(anon monitor: i32) -> i32
+extern function GetMonitorPhysicalHeight(anon monitor: i32) -> i32
+extern function GetMonitorRefreshRate(anon monitor: i32) -> i32
 extern function GetWindowPosition() -> Vector2
 extern function GetWindowScaleDPI() -> Vector2
-extern function GetMonitorName(anonymous monitor: i32) -> raw c_char
-extern function SetClipboardText(anonymous text: raw c_char)
+extern function GetMonitorName(anon monitor: i32) -> raw c_char
+extern function SetClipboardText(anon text: raw c_char)
 extern function GetClipboardText() -> raw c_char
 extern function SwapScreenBuffer()
 extern function PollInputEvents()
-extern function WaitTime(anonymous ms: f32)
+extern function WaitTime(anon ms: f32)
 extern function ShowCursor()
 extern function HideCursor()
 extern function IsCursorHidden() -> bool
 extern function EnableCursor()
 extern function DisableCursor()
 extern function IsCursorOnScreen() -> bool
-extern function ClearBackground(anonymous color: Color)
+extern function ClearBackground(anon color: Color)
 extern function BeginDrawing()
 extern function EndDrawing()
-extern function BeginMode2D(anonymous camera: Camera2D)
+extern function BeginMode2D(anon camera: Camera2D)
 extern function EndMode2D()
-extern function BeginMode3D(anonymous camera: Camera3D)
+extern function BeginMode3D(anon camera: Camera3D)
 extern function EndMode3D()
-extern function BeginTextureMode(anonymous target: RenderTexture)
+extern function BeginTextureMode(anon target: RenderTexture)
 extern function EndTextureMode()
-extern function BeginShaderMode(anonymous shader: Shader)
+extern function BeginShaderMode(anon shader: Shader)
 extern function EndShaderMode()
-extern function BeginBlendMode(anonymous mode: i32)
+extern function BeginBlendMode(anon mode: i32)
 extern function EndBlendMode()
 extern function BeginScissorMode(x: i32, y: i32, width: i32, height: i32)
 extern function EndScissorMode()
-extern function BeginVrStereoMode(anonymous config: VrStereoConfig)
+extern function BeginVrStereoMode(anon config: VrStereoConfig)
 extern function EndVrStereoMode()
-extern function LoadVrStereoConfig(anonymous device: VrDeviceInfo) -> VrStereoConfig
-extern function UnloadVrStereoConfig(anonymous config: VrStereoConfig)
+extern function LoadVrStereoConfig(anon device: VrDeviceInfo) -> VrStereoConfig
+extern function UnloadVrStereoConfig(anon config: VrStereoConfig)
 
 // Shader management functions
 // NOTE: Shader functionality is not available on OpenGL 1.1
@@ -722,31 +722,31 @@ extern function UnloadShader(shader: Shader)
 
 // Screen-space-related functions
 extern function GetMouseRay(mousePosition: Vector2, camera: Camera3D)
-extern function GetCameraMatrix(anonymous camera: Camera3D)
-extern function GetCameraMatrix2D(anonymous camera: Camera2D)
+extern function GetCameraMatrix(anon camera: Camera3D)
+extern function GetCameraMatrix2D(anon camera: Camera2D)
 extern function GetWorldToScreen(position: Vector3, camera: Camera3D)
 extern function GetWorldToScreenEx(position: Vector3, camera: Camera3D, width: i32, height: i32)
 extern function GetWorldToScreen2D(position: Vector2, camera: Camera2D)
 extern function GetScreenToWorld2D(position: Vector2, camera: Camera2D)
 
 // Timing-related functions
-extern function SetTargetFPS(anonymous fps: i32)
+extern function SetTargetFPS(anon fps: i32)
 extern function GetFPS() -> i32
 extern function GetFrameTime() -> f32
 extern function GetTIme() -> f64
 
 // Misc. functions
 extern function GetRandomValue(min: i32, max: i32) -> i32
-extern function SetRandomSeed(anonymous seed: u32)
-extern function TakeScreenshot(anonymous fileName: raw c_char)
-extern function SetConfigFlags(anonymous flags: u32)
+extern function SetRandomSeed(anon seed: u32)
+extern function TakeScreenshot(anon fileName: raw c_char)
+extern function SetConfigFlags(anon flags: u32)
 
 // NOTE: Jakt does not support variadic parameters
 extern function TraceLog(logLevel: i32, text: raw c_char)
-extern function SetTraceLogLevel(anonymous logLevel: i32)
-extern function MemAlloc(anonymous size: i32) -> raw void
+extern function SetTraceLogLevel(anon logLevel: i32)
+extern function MemAlloc(anon size: i32) -> raw void
 extern function MemRealloc(ptr: raw void, size: i32) -> raw void
-extern function MemFree(anonymous ptr: raw void)
+extern function MemFree(anon ptr: raw void)
 
 // NOTE: Jakt does not support callbacks
 // // Set custom callbacks
@@ -759,27 +759,27 @@ extern function MemFree(anonymous ptr: raw void)
 
 // Files management functions
 extern function LoadFileData(fileName: raw c_char, bytesRead: raw u32) -> raw u8
-extern function UnloadFileData(anonymous data: raw u8)
+extern function UnloadFileData(anon data: raw u8)
 extern function SaveFileData()
-extern function LoadFileText(anonymous fileName: raw c_char) -> raw c_char
-extern function UnloadFileText(anonymous text: raw c_char)
+extern function LoadFileText(anon fileName: raw c_char) -> raw c_char
+extern function UnloadFileText(anon text: raw c_char)
 extern function SaveFileText(fileName: raw c_char, text: raw c_char) -> bool
-extern function FileExists(anonymous fileName: raw c_char) -> bool
-extern function DirectoryExists(anonymous dirPath: raw c_char) -> bool
+extern function FileExists(anon fileName: raw c_char) -> bool
+extern function DirectoryExists(anon dirPath: raw c_char) -> bool
 extern function IsFileExtension(fileName: raw c_char, ext: raw c_char) -> bool
-extern function GetFileExtension(anonymous fileName: raw c_char) -> raw c_char
-extern function GetFileName(anonymous filePath: raw c_char) -> raw c_char
-extern function GetFileNameWithoutExt(anonymous filePath: raw c_char) -> raw c_char
-extern function GetDirectoryPath(anonymous filePath: raw c_char) -> raw c_char
-extern function GetPrevDirectoryPath(anonymous filePath: raw c_char) -> raw c_char
+extern function GetFileExtension(anon fileName: raw c_char) -> raw c_char
+extern function GetFileName(anon filePath: raw c_char) -> raw c_char
+extern function GetFileNameWithoutExt(anon filePath: raw c_char) -> raw c_char
+extern function GetDirectoryPath(anon filePath: raw c_char) -> raw c_char
+extern function GetPrevDirectoryPath(anon filePath: raw c_char) -> raw c_char
 extern function GetWorkingDirectory() -> raw c_char
 extern function GetDirectoryFiles(dirPath: raw raw c_char, count: raw i32) -> raw raw c_char
 extern function ClearDirectoryFiles()
-extern function ChangeDirectory(anonymous dir: raw c_char) -> bool
+extern function ChangeDirectory(anon dir: raw c_char) -> bool
 extern function IsFileDropped() -> bool
-extern function GetDroppedFiles(anonymous count: raw i32) -> raw raw c_char
+extern function GetDroppedFiles(anon count: raw i32) -> raw raw c_char
 extern function ClearDroppedFiles()
-extern function GetFileModTime(anonymous fileName: raw c_char) -> i64
+extern function GetFileModTime(anon fileName: raw c_char) -> i64
 
 // Compression/Encoding functionality
 extern function CompressData(data: raw u8, dataLength: i32, compDataLength: raw i32) -> raw u8
@@ -788,30 +788,30 @@ extern function EncodeDataBase64(data: raw u8, dataLength: i32, outputLength: ra
 extern function DecodeDataBase64(data: raw u8, outputLength: raw i32) -> raw u8
 
 extern function SaveStorageValue(position: u32, value: i32) -> bool
-extern function LoadStorageValue(anonymous position: u32) -> i32
+extern function LoadStorageValue(anon position: u32) -> i32
 
-extern function OpenURL(anonymous url: raw c_char)
+extern function OpenURL(anon url: raw c_char)
 
 // Input-related functions: keyboard
-extern function IsKeyPressed(anonymous key: i32) -> bool
-extern function IsKeyDown(anonymous key: i32) -> bool
-extern function IsKeyReleased(anonymous key: i32) -> bool
-extern function IsKeyUp(anonymous key: i32) -> bool
-extern function SetExitKey(anonymous key: i32)
+extern function IsKeyPressed(anon key: i32) -> bool
+extern function IsKeyDown(anon key: i32) -> bool
+extern function IsKeyReleased(anon key: i32) -> bool
+extern function IsKeyUp(anon key: i32) -> bool
+extern function SetExitKey(anon key: i32)
 extern function GetKeyPressed() -> i32
 extern function GetCharPressed() -> i32
 
 // Input-related functions: gamepads
-extern function IsGamepadAvailable(anonymous gameped: i32) -> bool
-extern function GetGamepadName(anonymous gameped: i32) -> raw c_char
+extern function IsGamepadAvailable(anon gameped: i32) -> bool
+extern function GetGamepadName(anon gameped: i32) -> raw c_char
 extern function IsGamepadButtonPressed(gameped: i32, button: i32) -> bool
 extern function IsGamepadButtonDown(gameped: i32, button: i32) -> bool
 extern function IsGamepadButtonReleased(gameped: i32, button: i32) -> bool
 extern function IsGamepadButtonUp(gameped: i32, button: i32) -> bool
 extern function GetGamepadButtonPressed() -> i32
-extern function GetGamepadAxisCount(anonymous gameped: i32) -> i32
+extern function GetGamepadAxisCount(anon gameped: i32) -> i32
 extern function GetGamepadAxisMovement(gameped: i32, axis: i32) -> f32
-extern function SetGamepadMappings(anonymous mappings: raw c_char) -> i32
+extern function SetGamepadMappings(anon mappings: raw c_char) -> i32
 
 // Input-related functions: mouse
 extern function IsMouseButtonPressed(button: i32) -> bool
@@ -830,12 +830,12 @@ extern function SetMouseCursor(cursor: i32)
 
 extern function GetTouchX() -> i32
 extern function GetTouchY() -> i32
-extern function GetTouchPosition(anonymous index: i32) -> Vector2
-extern function GetTouchPointId(anonymous index: i32) -> i32
+extern function GetTouchPosition(anon index: i32) -> Vector2
+extern function GetTouchPointId(anon index: i32) -> i32
 extern function GetTouchPointCount() -> i32
 
-extern function SetGesturesEnabled(anonymous flags: u32)
-extern function IsGestureDetected(anonymous gesture: i32) -> bool
+extern function SetGesturesEnabled(anon flags: u32)
+extern function IsGestureDetected(anon gesture: i32) -> bool
 extern function GetGestureDetected() -> i32
 extern function GetGestureHoldDuration() -> f32
 extern function GetGestureDragVector() -> Vector2
@@ -844,11 +844,11 @@ extern function GetGesturePinchVector() -> Vector2
 extern function GetGesturePinchAngle() -> f32
 
 extern function SetCameraMode(camera: Camera3D, mode: i32)
-extern function UpdateCamera(anonymous camera: raw Camera3D)
+extern function UpdateCamera(anon camera: raw Camera3D)
 
-extern function SetCameraPanControl(anonymous keyPan: i32)
-extern function SetCameraAltControl(anonymous keyAlt: i32)
-extern function SetCameraSmoothZoomControl(anonymous keySmoothZoom: i32)
+extern function SetCameraPanControl(anon keyPan: i32)
+extern function SetCameraAltControl(anon keyAlt: i32)
+extern function SetCameraSmoothZoomControl(anon keySmoothZoom: i32)
 extern function SetCameraMoveControls(keyFront: i32, keyBack: i32, keyRight: i32, keyLeft: i32, keyUp: i32, keyDown: i32)
 
 extern function SetShapesTexture(texture: Texture, source: Rectangle)
@@ -905,13 +905,13 @@ extern function GetCollisionRec(rec1: Rectangle, rec2: Rectangle) -> Rectangle
 
 // loading: Image functions
 // NOTE: This functions do not require GPU access
-extern function LoadImage(anonymous fileName: raw c_char) -> Image
+extern function LoadImage(anon fileName: raw c_char) -> Image
 extern function LoadImageRaw(fileName: raw c_char, width: i32, height: i32, format: i32, headerSize: i32) -> Image
 extern function LoadImageAnim(fileName: raw c_char, frames: raw i32) -> Image
 extern function LoadImageFromMemory(fileType: raw c_char, fileData: raw u8, dataSize: i32) -> Image
 extern function LoadImageFromTexture(texture: Texture) -> Image
 extern function LoadImageFromScreen() -> Image
-extern function UnloadImage(anonymous image: Image)
+extern function UnloadImage(anon image: Image)
 extern function ExportImage(image: Image, fileName: raw c_char) -> bool
 extern function ExportImageAsCode(image: Image, fileName: raw c_char) -> bool
 
@@ -925,7 +925,7 @@ extern function GenImageWhiteNoise(width: i32, height: i32, factor: f32) -> Imag
 extern function GenImageCellular(width: i32, height: i32, tileSize: i32) -> Image
 
 // manipulation: Image functions
-extern function ImageCopy(anonymous image: Image) -> Image
+extern function ImageCopy(anon image: Image) -> Image
 extern function ImageFromImage(image: Image, rec: Rectangle) -> Image
 extern function ImageText(text: raw c_char, fontSize: i32, color: Color) -> Image
 extern function ImageTextEx(font: Font, text: raw c_char, fontSize: f32, spacing: f32, tint: Color) -> Image
@@ -935,7 +935,7 @@ extern function ImageCrop(image: raw Image, crop: Rectangle)
 extern function ImageAlphaCrop(image: raw Image, threshold: f32)
 extern function ImageAlphaClear(image: raw Image, color: Color, threshold: f32)
 extern function ImageAlphaMask(image: raw Image, alphaMask: Image)
-extern function ImageAlphaPremultiply(anonymous image: raw Image)
+extern function ImageAlphaPremultiply(anon image: raw Image)
 extern function ImageResize(image: raw Image, newWidth: i32, newHeight: i32)
 extern function ImageResizeNN(image: raw Image, newWidth: i32, newHeight: i32)
 extern function ImageResizeCanvas(image: raw Image, newWidth: i32, newHeight: i32, offsetX: i32, offsetY: i32, fill: Color)
@@ -951,7 +951,7 @@ extern function ImageColorGrayscale(image: raw Image)
 extern function ImageColorContrast(image: raw Image, contrast: f32)
 extern function ImageColorBrightness(image: raw Image, brightness: i32)
 extern function ImageColorReplace(image: raw Image, color: Color, replace: Color)
-extern function LoadImageColors(anonymous image: Image) -> raw Color
+extern function LoadImageColors(anon image: Image) -> raw Color
 extern function LoadImagePalette(image: Image, maxPaletteSize: i32, colorCount: raw i32) -> raw Color
 extern function UnloadImageColors(colors: raw Color)
 extern function UnloadImagePalette(colors: raw Color)
@@ -978,17 +978,17 @@ extern function ImageDrawTextEx(dst: raw Image, font: Font, text: raw c_char, po
 
 // Texture loading functions
 // NOTE: These functions require GPU access
-extern function LoadTexture(anonymous fileName: raw c_char) -> Texture
-extern function LoadTextureFromImage(anonymous image: Image) -> Texture
+extern function LoadTexture(anon fileName: raw c_char) -> Texture
+extern function LoadTextureFromImage(anon image: Image) -> Texture
 extern function LoadTextureCubemap(image: Image, layout: i32) -> Texture
 extern function LoadRenderTexture(width: i32, height: i32) -> RenderTexture
-extern function UnloadTexture(anonymous texture: Texture)
-extern function UnloadRenderTexture(anonymous target: RenderTexture)
+extern function UnloadTexture(anon texture: Texture)
+extern function UnloadRenderTexture(anon target: RenderTexture)
 extern function UpdateTexture(texture: Texture, pixels: raw void)
 extern function UpdateTextureRec(texture: Texture, rec: Rectangle, pixels: raw void)
 
 // Texture configuration functions
-extern function GenTextureMipmaps(anonymous texture: Texture)
+extern function GenTextureMipmaps(anon texture: Texture)
 extern function SetTextureFilter(texture: Texture, filter: i32)
 extern function SetTextureWrap(texture: Texture, wrap: i32)
 
@@ -1005,28 +1005,28 @@ extern function DrawTexturePoly(texture: Texture, center: Vector2, points: raw V
 
 // Color/pixel related functions
 extern function Fade(color: Color, alpha: f32) -> Color
-extern function ColorToInt(anonymous color: Color) -> i32
-extern function ColorNormalize(anonymous color: Color) -> Vector4
-extern function ColorFromNormalized(anonymous normalized: Vector4) -> Color
-extern function ColorToHSV(anonymous color: Color) -> Vector3
+extern function ColorToInt(anon color: Color) -> i32
+extern function ColorNormalize(anon color: Color) -> Vector4
+extern function ColorFromNormalized(anon normalized: Vector4) -> Color
+extern function ColorToHSV(anon color: Color) -> Vector3
 extern function ColorFromHSV(hue: f32, saturation: f32, value: f32) -> Color
 extern function ColorAlpha(color: Color, alpha: f32) -> Color
 extern function ColorAlphaBlend(dst: Color, src: Color, tint: Color) -> Color
-extern function GetColor(anonymous hexValue: u32) -> Color
+extern function GetColor(anon hexValue: u32) -> Color
 extern function GetPixelColor(srcPtr: raw void, format: i32) -> Color
 extern function SetPixelColor(dstPtr: raw void, color: Color, format: i32)
 extern function GetPixelDataSize(width: i32, height: i32, format: i32) -> i32
 
 // Font loading/unloading functions
 extern function GetFontDefault() -> Font
-extern function LoadFont(anonymous fileName: raw c_char) -> Font
+extern function LoadFont(anon fileName: raw c_char) -> Font
 extern function LoadFontEx(fileName: raw c_char, fontSize: i32, fontChars: raw i32, glyphCount: i32) -> Font
 extern function LoadFontFromImage(image: Image, key: Color, firstChar: i32) -> Font
 extern function LoadFontFromMemory(fileType: raw c_char, fileData: raw c_char, dataSize: i32, fontSize: i32, fontChars: raw i32, glyphCount: i32) -> Font
 extern function LoadFontData(fileData: raw c_char, dataSize: i32, fontSize: i32, fontChars: raw i32, glyphCount: i32, type: i32) -> raw GlyphInfo
 extern function GenImageFontAtlas(chars: raw GlyphInfo, recs: raw raw Rectangle, glyphCount: i32, fontSize: i32, padding: i32, packMethod: i32) -> Image
 extern function UnloadFontData(chars: raw GlyphInfo, glyphCount: i32)
-extern function UnloadFont(anonymous font: Font)
+extern function UnloadFont(anon font: Font)
 
 // Text drawing functions
 extern function DrawFPS(posX: i32, posY: i32)
@@ -1044,8 +1044,8 @@ extern function GetGlyphAtlasRec(font: Font, codepoint: i32) -> Rectangle
 
 // Text codepoints management functions (unicode characters)
 extern function LoadCodepoints(text: raw c_char, count: raw i32) -> raw i32
-extern function UnloadCodepoints(anonymous codepoints: raw i32)
-extern function GetCodepointCount(anonymous text: raw c_char) -> i32
+extern function UnloadCodepoints(anon codepoints: raw i32)
+extern function GetCodepointCount(anon text: raw c_char) -> i32
 extern function GetCodepoint(text: raw c_char, bytesProcessed: raw i32) -> i32
 extern function CodepointToUTF8(codepoint: i32, byteSize: raw i32) -> raw c_char
 extern function TextCodepointsToUTF8(codepoints: raw i32, length: i32) -> raw c_char
@@ -1093,11 +1093,11 @@ extern function DrawRay(ray: Ray, color: Color)
 extern function DrawGrid(slices: i32, spacing: f32)
 
 // Model management functions
-extern function LoadModel(anonymous fileName: raw c_char) -> Model
-extern function LoadModelFromMesh(anonymous mesh: Mesh) -> Model
-extern function UnloadModel(anonymous model: Model)
-extern function UnloadModelKeepMeshes(anonymous model: Model)
-extern function GetModelBoundingBox(anonymous model: Model) -> BoundingBox
+extern function LoadModel(anon fileName: raw c_char) -> Model
+extern function LoadModelFromMesh(anon mesh: Mesh) -> Model
+extern function UnloadModel(anon model: Model)
+extern function UnloadModelKeepMeshes(anon model: Model)
+extern function GetModelBoundingBox(anon model: Model) -> BoundingBox
 
 // Model drawing functions
 extern function DrawModel(model: Model, position: Vector3, scale: f32, tint: Color)
@@ -1112,13 +1112,13 @@ extern function DrawBillboardPro(camera: Camera3D, texture: Texture, source: Rec
 // Mesh management functions
 extern function UploadMesh(mesh: raw Mesh, dynamic: bool)
 extern function UpdateMeshBuffer(mesh: Mesh, index: i32, data: raw void, dataSize: i32, offset: i32)
-extern function UnloadMesh(anonymous mesh: Mesh)
+extern function UnloadMesh(anon mesh: Mesh)
 extern function DrawMesh(mesh: Mesh, material: Material, transform: Material)
 extern function DrawMeshInstanced(mesh: Mesh, material: Material, transforms: raw Material, instances: i32)
 extern function ExportMesh(mesh: Mesh, fileName: raw c_char) -> bool
-extern function GetMeshBoundingBox(anonymous mesh: Mesh) -> BoundingBox
-extern function GenMeshTangents(anonymous mesh: raw Mesh)
-extern function GenMeshBinormals(anonymous mesh: raw Mesh)
+extern function GetMeshBoundingBox(anon mesh: Mesh) -> BoundingBox
+extern function GenMeshTangents(anon mesh: raw Mesh)
+extern function GenMeshBinormals(anon mesh: raw Mesh)
 
 // Mesh generation functions
 extern function GenMeshPoly(sides: i32, radius: f32) -> Mesh
@@ -1136,14 +1136,14 @@ extern function GenMeshCubicmap(cubicmap: Image, cubeSize: Vector3) -> Mesh
 // loading: Material/unloading functions
 extern function LoadMaterials(fileName: raw c_char, materialCount: raw i32) -> raw Material
 extern function LoadMaterialDefault() -> Material
-extern function UnloadMaterial(anonymous material: Material)
+extern function UnloadMaterial(anon material: Material)
 extern function SetMaterialTexture(material: raw Material, mapType: i32, texture: Texture)
 extern function SetModelMeshMaterial(model: raw Model, meshId: i32, materialId: i32)
 
 // Model animations loading/unloading functions
 extern function LoadModelAnimations(fileName: raw c_char, animCount: raw u32) -> raw ModelAnimation
 extern function UpdateModelAnimation(model: Model, anim: ModelAnimation, frame: i32)
-extern function UnloadModelAnimation(anonymous anim: ModelAnimation)
+extern function UnloadModelAnimation(anon anim: ModelAnimation)
 extern function UnloadModelAnimations(animations: ModelAnimation, count: u32)
 extern function IsModelAnimationValid(model: Model, anim: ModelAnimation) -> bool
 
@@ -1162,62 +1162,62 @@ extern function GetRayCollisionQuad(ray: Ray, p1: Vector3, p2: Vector3, p3: Vect
 extern function InitAudioDevice()
 extern function CloseAudioDevice()
 extern function IsAudioDeviceReady() -> bool
-extern function SetMasterVolume(anonymous volume: f32)
+extern function SetMasterVolume(anon volume: f32)
 
 // Wave/loading: Sound/unloading functions
-extern function LoadWave(anonymous fileName: raw c_char) -> Wave
+extern function LoadWave(anon fileName: raw c_char) -> Wave
 extern function LoadWaveFromMemory(fileType: raw c_char, fileData: raw c_char, dataSize: i32) -> Wave
-extern function LoadSound(anonymous fileName: raw c_char) -> Sound
-extern function LoadSoundFromWave(anonymous wave: Wave) -> Sound
+extern function LoadSound(anon fileName: raw c_char) -> Sound
+extern function LoadSoundFromWave(anon wave: Wave) -> Sound
 extern function UpdateSound(sound: Sound, data: raw void, sampleCount: i32)
-extern function UnloadWave(anonymous wave: Wave)
-extern function UnloadSound(anonymous sound: Sound)
+extern function UnloadWave(anon wave: Wave)
+extern function UnloadSound(anon sound: Sound)
 extern function ExportWave(wave: Wave, fileName: raw c_char) -> bool
 extern function ExportWaveAsCode(wave: Wave, fileName: raw c_char) -> bool
 
 // Wave/management: Sound functions
-extern function PlaySound(anonymous sound: Sound)
-extern function StopSound(anonymous sound: Sound)
-extern function PauseSound(anonymous sound: Sound)
-extern function ResumeSound(anonymous sound: Sound)
-extern function PlaySoundMulti(anonymous sound: Sound)
+extern function PlaySound(anon sound: Sound)
+extern function StopSound(anon sound: Sound)
+extern function PauseSound(anon sound: Sound)
+extern function ResumeSound(anon sound: Sound)
+extern function PlaySoundMulti(anon sound: Sound)
 extern function StopSoundMulti()
 extern function GetSoundsPlaying() -> i32
-extern function IsSoundPlaying(anonymous sound: Sound) -> bool
+extern function IsSoundPlaying(anon sound: Sound) -> bool
 extern function SetSoundVolume(sound: Sound, volume: f32)
 extern function SetSoundPitch(sound: Sound, pitch: f32)
 extern function WaveFormat(wave: raw Wave, sampleRate: i32, sampleSize: i32, channels: i32)
-extern function WaveCopy(anonymous wave: Wave) -> Wave
+extern function WaveCopy(anon wave: Wave) -> Wave
 extern function WaveCrop(wave: raw Wave, initSample: i32, finalSample: i32)
-extern function LoadWaveSamples(anonymous wave: Wave) -> raw f32
-extern function UnloadWaveSamples(anonymous samples: raw f32)
+extern function LoadWaveSamples(anon wave: Wave) -> raw f32
+extern function UnloadWaveSamples(anon samples: raw f32)
 
 // Music management functions
-extern function LoadMusicStream(anonymous fileName: raw c_char) -> Music
+extern function LoadMusicStream(anon fileName: raw c_char) -> Music
 extern function LoadMusicStreamFromMemory(fileType: raw c_char, data: raw u8, dataSize: i32) -> Music
-extern function UnloadMusicStream(anonymous music: Music)
-extern function PlayMusicStream(anonymous music: Music)
-extern function IsMusicStreamPlaying(anonymous music: Music) -> bool
-extern function UpdateMusicStream(anonymous music: Music)
-extern function StopMusicStream(anonymous music: Music)
-extern function PauseMusicStream(anonymous music: Music)
-extern function ResumeMusicStream(anonymous music: Music)
-extern function SeekMusicStream(anonymous music: Music, position: f32)
-extern function SetMusicVolume(anonymous music: Music, volume: f32)
-extern function SetMusicPitch(anonymous music: Music, pitch: f32)
-extern function GetMusicTimeLength(anonymous music: Music) -> f32
-extern function GetMusicTimePlayed(anonymous music: Music) -> f32
+extern function UnloadMusicStream(anon music: Music)
+extern function PlayMusicStream(anon music: Music)
+extern function IsMusicStreamPlaying(anon music: Music) -> bool
+extern function UpdateMusicStream(anon music: Music)
+extern function StopMusicStream(anon music: Music)
+extern function PauseMusicStream(anon music: Music)
+extern function ResumeMusicStream(anon music: Music)
+extern function SeekMusicStream(anon music: Music, position: f32)
+extern function SetMusicVolume(anon music: Music, volume: f32)
+extern function SetMusicPitch(anon music: Music, pitch: f32)
+extern function GetMusicTimeLength(anon music: Music) -> f32
+extern function GetMusicTimePlayed(anon music: Music) -> f32
 
 // AudioStream management functions
 extern function LoadAudioStream(sampleRate: u32, sampleSize: u32, channels: u32) -> AudioStream
-extern function UnloadAudioStream(anonymous stream: AudioStream)
+extern function UnloadAudioStream(anon stream: AudioStream)
 extern function UpdateAudioStream(stream: AudioStream, data: raw void, frameCount: i32)
-extern function IsAudioStreamProcessed(anonymous stream: AudioStream) -> bool
-extern function PlayAudioStream(anonymous stream: AudioStream)
-extern function PauseAudioStream(anonymous stream: AudioStream)
-extern function ResumeAudioStream(anonymous stream: AudioStream)
-extern function IsAudioStreamPlaying(anonymous stream: AudioStream) -> bool
-extern function StopAudioStream(anonymous stream: AudioStream)
+extern function IsAudioStreamProcessed(anon stream: AudioStream) -> bool
+extern function PlayAudioStream(anon stream: AudioStream)
+extern function PauseAudioStream(anon stream: AudioStream)
+extern function ResumeAudioStream(anon stream: AudioStream)
+extern function IsAudioStreamPlaying(anon stream: AudioStream) -> bool
+extern function StopAudioStream(anon stream: AudioStream)
 extern function SetAudioStreamVolume(stream: AudioStream, volume: f32)
 extern function SetAudioStreamPitch(stream: AudioStream, pitch: f32)
-extern function SetAudioStreamBufferSizeDefault(anonymous size: i32)
+extern function SetAudioStreamBufferSizeDefault(anon size: i32)
